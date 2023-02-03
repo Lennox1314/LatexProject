@@ -29,48 +29,67 @@ namespace LatexProject
             InitializeComponent();
         }
 
+
+
+        private void btnCreateOutput_Click(object sender, RoutedEventArgs e)
+        {
+            int rows = int.Parse(xCoord.Text);
+            int columns = int.Parse(yCoord.Text);
+
+            StringBuilder latexCode = new StringBuilder();
+            latexCode.AppendLine("\\begin{tabular}{|");
+            for (int j = 0; j < columns; j++)
+            {
+                latexCode.Append("c|");
+            }
+            latexCode.AppendLine("}");
+            latexCode.AppendLine("\\hline");
+
+            for (int i = 0; i < columns; i++)
+            {
+                for (int j = 0; j < rows; j++)
+                {
+                    TextBox textBox = (TextBox)canContainer.FindName("TextBox_" + i + "_" + j);
+                    latexCode.Append(textBox.Text + " & ");
+                }
+                latexCode.Length -= 3;
+                latexCode.AppendLine("\\\\ \\hline");
+            }
+
+            latexCode.AppendLine("\\end{tabular}");
+
+            LaTeXCodeTextBox.Text = latexCode.ToString();
+        }
+    
+
+        
         private void btnCreateGrid_Click(object sender, RoutedEventArgs e)
         {
-            int x = Int32.Parse(xCoord.Text);
-            int y = Int32.Parse(yCoord.Text);
-            int boxName = 0;
-            TextBox[] gridBoxes = new TextBox[x + y];
+            int rows = int.Parse(xCoord.Text);
+            int columns = int.Parse(yCoord.Text);
+            double textBoxWidth = 50;
+            double textBoxHeight = 25;
 
-            //  int numberOfBoxes = x * y;
-            for (int j = 0; j < y; j++) // creates number of column based on y coordinate
+            for (int i = 0; i < columns; i++)
             {
-
-                for (int i = 0; i < x; i++) // creates number of rows bases on x coordinate
+                for (int j = 0; j < rows; j++)
                 {
-                    TextBox dynamicTextBox = new TextBox();
-                   // dynamicTextBox.Name = "gridBox" + boxName;
-                    dynamicTextBox.Height = 18;
-                    dynamicTextBox.Width = 25;
-                    dynamicTextBox.Margin = new Thickness(left * 55, top * 55, right * 54, bottom *40);
-                    this.MainGrid.Children.Add(dynamicTextBox);
-                   // MainGrid.RegisterName("gridBox" + boxName, dynamicTextBox); not working for register?
-                    right++;
-                    boxName++;
-
+                    TextBox textBox = new TextBox();
+                    textBox.Width = textBoxWidth;
+                    textBox.Height = textBoxHeight;
+                    textBox.Name = "TextBox_" + i + "_" + j;
+                    RegisterName(textBox.Name, textBox);
+                    Canvas.SetLeft(textBox, j * textBoxWidth);
+                    Canvas.SetTop(textBox, i * textBoxHeight);
+                    canContainer.Children.Add(textBox);
                 }
-                right = 0;
-                bottom++;
             }
-            this.canContainer.Children.Add(MainGrid);
-            
+
 
 
         }
-        private void btnCreateOutput_Click(object sender, RoutedEventArgs e) // trying to extract input from grid of textboxes
-        {
-            object testObj = MainGrid.FindName("Gridbox0");
-
-            if (testObj != null)
-            {
-                testOutput.Content = testObj.ToString();
-            }
-           
-        }
+      
 
     }
 }
+        
