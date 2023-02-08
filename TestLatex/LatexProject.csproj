@@ -7,4 +7,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="GUI\Images\ExitButton.png" />
+    <None Remove="GUI\Images\MaximizeButton.png" />
+    <None Remove="GUI\Images\MinimizeButton.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="GUI\Fonts\" />
+    <Folder Include="GUI\MVVM\Model\" />
+    <Folder Include="GUI\MVVM\View\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="GUI\Images\ExitButton.png" />
+    <Resource Include="GUI\Images\MaximizeButton.png" />
+    <Resource Include="GUI\Images\MinimizeButton.png" />
+  </ItemGroup>
+
 </Project>
