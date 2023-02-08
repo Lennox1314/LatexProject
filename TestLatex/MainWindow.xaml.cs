@@ -42,13 +42,20 @@ namespace LatexProject
         }
 
         private void MaximizeButton_Click(object sender, RoutedEventArgs e)
-        { // KDN - Maximized program on click
-
+        { // KDN - Maximize program on click or send back to normal size depending on current size
+            if(this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+            }
+            else if(this.WindowState == WindowState.Normal) 
+            { 
+                this.WindowState = WindowState.Maximized;
+            }
         }
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         { // KDN - Minimized program on click
-            
+            this.WindowState = WindowState.Minimized;
         }
     }
       
