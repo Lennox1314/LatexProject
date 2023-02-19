@@ -4,18 +4,56 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LatexProject"
+        xmlns:viewModel="clr-namespace:LatexProject.GUI.MVVM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="btncreateTextBoxes" Content="Create Boxes" HorizontalAlignment="Left" Margin="604,87,0,0" VerticalAlignment="Top" Click="btnCreateGrid_Click"/>
-        <Canvas Margin="10,10,278,10"
-        Name="canContainer"/>
-        <TextBox x:Name="xCoord" HorizontalAlignment="Left" Margin="583,51,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="48" Height="18"/>
-        <TextBox x:Name="yCoord" HorizontalAlignment="Left" Margin="660,51,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="49"/>
-        <Label Content="Enter the size of table you want to create" HorizontalAlignment="Left" Margin="543,10,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btncreateOutput" Content="Create Output" HorizontalAlignment="Left" Margin="600,121,0,0" VerticalAlignment="Top" Click="btnCreateOutput_Click"/>
-        <TextBox x:Name="LaTeXCodeTextBox" HorizontalAlignment="Left" Margin="543,177,0,0" TextWrapping="Wrap" Text="Latex Ouput" VerticalAlignment="Top"  Width="200"/>
+        Title="MainWindow" Height="450" Width="800"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
+    
+    <Border Background="#FF252530" 
+            CornerRadius="20">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Latex Helper" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" FontSize="34" />
+
+            <StackPanel Grid.Row="1">
+                <RadioButton Content="Home" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" IsChecked="True" Command="{Binding HomeViewCommand}"/>
+                <RadioButton Content="Instructions" Height="50" Foreground="white" FontSize="14" Style="{StaticResource MenuButtonTheme}" Command="{Binding InstructionsViewCommand}"/>
+                <RadioButton Content="Create Table" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" Command="{Binding CreateTableViewCommand}"/>
+                <RadioButton Content="Other Stuff" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}"/>
+            </StackPanel>
+            <TextBox Width="250" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="left" Grid.Column="1" Margin="10,0,0,20" Style="{StaticResource ModernTextBox}"/>
+
+            
+                <Button x:Name="ExitButton" Width="25" Height="25" Background="#FF252530" Grid.Column="1" Grid.Row="0" BorderThickness="0" HorizontalAlignment="right" Margin="0,0,5,25"  Click="ExitButton_Click">
+                    <Image Source="GUI/Images/ExitButton.png" Width="20" Height="20"/>
+                </Button>
+            <Button x:Name="MaximizeButton" Width="25" Height="25" Background="#FF252530" Grid.Column="1" Grid.Row="0" BorderThickness="0" HorizontalAlignment="right"  Margin="0,0,30,25" Click="MaximizeButton_Click" >
+                <Image Source="GUI/Images/MaximizeButton.png" Width="20" Height="20"/>
+            </Button>
+            <Button x:Name="MinimizeButton" Width="25" Height="25" Background="#FF252530" Grid.Column="1" Grid.Row="0" BorderThickness="0" HorizontalAlignment="right"  Margin="0,0,55,25" Click="MinimizeButton_Click">
+                <Image Source="GUI/Images/MinimizeButton.png" Width="20" Height="20"/>
+            </Button>
 
 
-    </Grid>
+
+            <ContentControl Grid.Row="1" Grid.Column="1" Margin="10" Content="{Binding CurrentView}"/>
+        </Grid>
+
+    </Border>
+
 </Window>
