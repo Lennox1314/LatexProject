@@ -101,6 +101,11 @@ StyleCopReport.xml
 # Chutzpah Test files
 _Chutzpah*
 
+
+#Rider config
+.idea/
+
+
 # Visual C++ cache files
 ipch/
 *.aps
@@ -117,6 +122,9 @@ ipch/
 *.vsp
 *.vspx
 *.sap
+
+.vscode/
+
 
 # Visual Studio Trace Files
 *.e2e
