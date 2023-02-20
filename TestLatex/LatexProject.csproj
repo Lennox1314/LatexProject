@@ -16,7 +16,6 @@
   <ItemGroup>
     <Folder Include="GUI\Fonts\" />
     <Folder Include="GUI\MVVM\Model\" />
-    <Folder Include="GUI\MVVM\View\" />
   </ItemGroup>
 
   <ItemGroup>

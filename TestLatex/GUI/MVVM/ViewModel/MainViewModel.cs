@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LatexProject.GUI.Core;
+using LatexProject.GUI.MVVM.View;
 
 namespace LatexProject.GUI.MVVM.ViewModel
 { /// <summary>
@@ -16,12 +17,15 @@ namespace LatexProject.GUI.MVVM.ViewModel
         public RelayCommand HomeViewCommand { get; set; }
         public RelayCommand InstructionsViewCommand { get; set; }
         public RelayCommand CreateTableViewCommand { get; set; }
+        public RelayCommand EquationCreationViewCommand { get; set; }
+
 
         public HomeViewModel HomeVM { get; set; }
 
         public InstructionsViewModel InstructionsVM { get; set; }
 
         public CreateTableViewModel CreateTableVM { get; set; }
+        public EquationCreationViewModel EquationCreationVM { get; set; }
 
         private object _currentView;
 
@@ -39,11 +43,13 @@ namespace LatexProject.GUI.MVVM.ViewModel
             HomeVM = new HomeViewModel();
             InstructionsVM= new InstructionsViewModel();
             CreateTableVM= new CreateTableViewModel();
+            EquationCreationVM = new EquationCreationViewModel();
             CurrentView = HomeVM;
 
             HomeViewCommand = new RelayCommand(o => { CurrentView= HomeVM; });
             InstructionsViewCommand = new RelayCommand(o => { CurrentView = InstructionsVM; });
             CreateTableViewCommand = new RelayCommand(o => { CurrentView = CreateTableVM; });
+            EquationCreationViewCommand = new RelayCommand(o => { CurrentView=EquationCreationVM; });
         }
     }
 }

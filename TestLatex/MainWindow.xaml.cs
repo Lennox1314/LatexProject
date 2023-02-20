@@ -14,12 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace LatexProject
-{ /* Problems:
-   * Cant drag the window around? Probably because I disabled the window and used a grid instead? need to make grid interactable
+{ /* Problems: None that I can currently see - kdn
+   *  
    */
-    /// <summary>
-    /// Currently only contains the click actions for exit, minimize, maxmize of program
-    /// </summary>
     public partial class MainWindow : Window
     {
         
@@ -32,6 +29,7 @@ namespace LatexProject
             ExitButton.Visibility = Visibility.Visible;
             MaximizeButton.Visibility = Visibility.Visible;
             MinimizeButton.Visibility = Visibility.Visible;
+            this.MouseLeftButtonDown += Window_MouseLeftButtonDown;
         }
 
    
@@ -56,6 +54,13 @@ namespace LatexProject
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         { // KDN - Minimized program on click
             this.WindowState = WindowState.Minimized;
+        }
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        { // KDN - Allows window to be dragged even though there is no windowstyle
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
         }
     }
       

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -27,6 +28,14 @@ namespace LatexProject.GUI.MVVM.View
             InitializeComponent();
         }
         public int left, right, top, bottom = 0;
+
+        private void btnClearScreen_Click(object sender, RoutedEventArgs e)
+        { // KDN - clears the canvas of any current textboxes and any text inside the output box
+            canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
+
+            LaTeXCodeTextBox.Text = "";
+
+        }
 
         private void btnCreateOutput_Click(object sender, RoutedEventArgs e)
             /* 2/7/23
@@ -65,7 +74,7 @@ namespace LatexProject.GUI.MVVM.View
 
         private void btnCreateGrid_Click(object sender, RoutedEventArgs e)
         /* 2/7/23
-         * Problems: need to make it clear old textboxes if they exist before creation or gets duplication error
+         * Problems:
          * If desired table is too big it will flow off the page
          * */
         { //KDN - Creates textbox grid for user input based on x and y values
@@ -74,14 +83,23 @@ namespace LatexProject.GUI.MVVM.View
             double textBoxWidth = 40;
             double textBoxHeight = 20;
 
+            canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb)); // clears any old textboxes if any
+
             for (int i = 0; i < columns; i++)
             {
                 for (int j = 0; j < rows; j++)
                 {
+                    
                     TextBox textBox = new TextBox();
+                    string textBoxName = "TextBox_" + i + "_" + j;
+                    if (canContainer.FindName(textBoxName) != null)
+                    {
+                        canContainer.UnregisterName(textBoxName);
+                        canContainer.Children.Remove(canContainer.FindName(textBoxName) as TextBox);
+                    }
                     textBox.Width = textBoxWidth;
                     textBox.Height = textBoxHeight;
-                    textBox.Name = "TextBox_" + i + "_" + j;
+                    textBox.Name = textBoxName;
                     RegisterName(textBox.Name, textBox);
                     Canvas.SetLeft(textBox, j * textBoxWidth);
                     Canvas.SetTop(textBox, i * textBoxHeight);

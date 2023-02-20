@@ -23,6 +23,10 @@
             <DataTemplate DataType="{x:Type viewModel:CreateTableViewModel}">
                 <view:CreateTableView/>
             </DataTemplate>
+            
+            <DataTemplate DataType="{x:Type viewModel:EquationCreationViewModel}">
+                <view:EquationCreationView/>
+            </DataTemplate>
 
         </ResourceDictionary>
     </Application.Resources>
