@@ -41,6 +41,18 @@ namespace LatexProject.GUI.MVVM.View
             lbl_tableHeaderContent.Visibility = Visibility.Collapsed;
         }
 
+        private void chkbox_tableCaption_Checked(object sender, RoutedEventArgs e)
+        {
+            txt_tableCaption.Visibility = Visibility.Visible;
+            lbl_tableCaption.Visibility = Visibility.Visible;
+        }
+
+        private void chkbox_tableCaption_Unchecked(object sender, RoutedEventArgs e)
+        {
+            txt_tableCaption.Visibility = Visibility.Collapsed;
+            lbl_tableCaption.Visibility = Visibility.Collapsed;
+        }
+
         private void btnClearScreen_Click(object sender, RoutedEventArgs e)
         { // KDN - clears the canvas of any current textboxes and any text inside the output box
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
@@ -58,14 +70,26 @@ namespace LatexProject.GUI.MVVM.View
             int rows = int.Parse(xCoord.Text);
             int columns = int.Parse(yCoord.Text);
             bool tableHeader = false;
+            bool tableCaption = false;
 
-            // Checks if tableheader checkbox is ticked and if so increments the rows to add the header row. - SDM
+            // Checks if tableheader checkbox is ticked and if so updates the bool value. - SDM
             if(chkbox_tableHeader.IsChecked == true)
             {
                 tableHeader = true;
             }
 
+            // Checks if tableCaption checkbox is ticked and if so updates the bool value. - SDM
+            if(chkbox_tableCaption.IsChecked == true)
+            {
+                tableCaption = true;
+            }
+
             StringBuilder latexCode = new StringBuilder();
+            latexCode.AppendLine("\\begin{table}[h]");
+
+            // Starts the table centered. - SDM
+            latexCode.AppendLine("\\centering");
+
             latexCode.AppendLine("\\begin{tabular}{|");
             for (int j = 0; j < columns; j++)
             {
@@ -92,6 +116,13 @@ namespace LatexProject.GUI.MVVM.View
             }
 
             latexCode.AppendLine("\\end{tabular}");
+
+            if(tableCaption)
+            {
+                latexCode.AppendLine("\\caption{" + txt_tableCaption.Text + "}");
+            }
+
+            latexCode.AppendLine("\\end{table}");
 
             LaTeXCodeTextBox.Text = latexCode.ToString();
         }

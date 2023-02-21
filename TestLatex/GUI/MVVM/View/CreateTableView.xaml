@@ -7,19 +7,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button x:Name="btncreateTextBoxes" Content="Create Boxes" HorizontalAlignment="Left" Margin="128,49,0,0" VerticalAlignment="Top" Click="btnCreateGrid_Click" RenderTransformOrigin="0.508,0.577"/>
+        <Button x:Name="btncreateTextBoxes" Content="Create Boxes" HorizontalAlignment="Left" Margin="134,50,0,0" VerticalAlignment="Top" Click="btnCreateGrid_Click" RenderTransformOrigin="0.508,0.577"/>
         <Canvas Margin="290,10,30,10"
         Name="canContainer"/>
-        <TextBox x:Name="xCoord" HorizontalAlignment="Left" Margin="0,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="56" Height="18"/>
-        <TextBox x:Name="yCoord" HorizontalAlignment="Left" Margin="59,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="59"/>
+        <TextBox x:Name="xCoord" HorizontalAlignment="Left" Margin="6,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="56" Height="18"/>
+        <TextBox x:Name="yCoord" HorizontalAlignment="Left" Margin="68,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="59"/>
         <TextBlock Text="Enter the size of table you want to create" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <Button x:Name="btncreateOutput" Content="Create Output" HorizontalAlignment="Left" Margin="0,138,0,0" VerticalAlignment="Top" Click="btnCreateOutput_Click"/>
-        <TextBox x:Name="LaTeXCodeTextBox" HorizontalAlignment="Left" Margin="0,188,0,0" TextWrapping="Wrap" Text="Latex Ouput" VerticalAlignment="Top"  Width="200"/>
-        <Button x:Name="btnClearScreen" Content="Clear" HorizontalAlignment="Left" Margin="0,163,0,0" VerticalAlignment="Top" Click="btnClearScreen_Click"/>
-        <Label x:Name="lbl_rows" Content="Rows" HorizontalAlignment="Left" Margin="9,31,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="3.762,1.581"/>
-        <Label x:Name="lbl_columns" Content="Columns" HorizontalAlignment="Left" Margin="59,31,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.463,0.691"/>
-        <CheckBox x:Name="chkbox_tableHeader" Content="Table Header?" HorizontalAlignment="Left" Margin="0,74,0,0" VerticalAlignment="Top" Foreground="White" Checked="chkbox_tableHeader_Checked" IsChecked="False" Unchecked="chkbox_tableHeader_Unhecked"/>
-        <TextBox x:Name="txt_tableHeader" HorizontalAlignment="Left" Margin="0,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
-        <Label x:Name="lbl_tableHeaderContent" Content="Enter Table Header Below" HorizontalAlignment="Left" Margin="0,89,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Collapsed"/>
+        <Button x:Name="btncreateOutput" Content="Create Output" HorizontalAlignment="Left" Margin="6,138,0,0" VerticalAlignment="Top" Click="btnCreateOutput_Click"/>
+        <TextBox x:Name="LaTeXCodeTextBox" HorizontalAlignment="Left" Margin="6,188,0,0" TextWrapping="Wrap" Text="Latex Ouput" VerticalAlignment="Top"  Width="200"/>
+        <Button x:Name="btnClearScreen" Content="Clear" HorizontalAlignment="Left" Margin="6,163,0,0" VerticalAlignment="Top" Click="btnClearScreen_Click"/>
+        <Label x:Name="lbl_rows" Content="Rows" HorizontalAlignment="Left" Margin="15,31,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="3.762,1.581"/>
+        <Label x:Name="lbl_columns" Content="Columns" HorizontalAlignment="Left" Margin="68,31,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.463,0.691"/>
+        <CheckBox x:Name="chkbox_tableHeader" Content="Table Header?" HorizontalAlignment="Left" Margin="6,77,0,0" VerticalAlignment="Top" Foreground="White" Checked="chkbox_tableHeader_Checked" IsChecked="False" Unchecked="chkbox_tableHeader_Unhecked"/>
+        <TextBox x:Name="txt_tableHeader" HorizontalAlignment="Left" Margin="6,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
+        <Label x:Name="lbl_tableHeaderContent" Content="Enter Table Header" HorizontalAlignment="Left" Margin="6,89,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Collapsed" Width="151"/>
+        <CheckBox x:Name="chkbox_tableCaption" Content="Table Caption?" HorizontalAlignment="Left" Margin="151,77,0,0" VerticalAlignment="Top" Foreground="White" Checked="chkbox_tableCaption_Checked" IsChecked="False" Unchecked="chkbox_tableCaption_Unchecked"/>
+        <Label x:Name="lbl_tableCaption" Content="Enter Table Caption" HorizontalAlignment="Left" Margin="151,89,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Collapsed"/>
+        <TextBox x:Name="txt_tableCaption" HorizontalAlignment="Left" Margin="151,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
     </Grid>
 </UserControl>
