@@ -29,6 +29,18 @@ namespace LatexProject.GUI.MVVM.View
         }
         public int left, right, top, bottom = 0;
 
+        private void chkbox_tableHeader_Checked(object sender, RoutedEventArgs e)
+        {
+            txt_tableHeader.Visibility = Visibility.Visible;
+            lbl_tableHeaderContent.Visibility = Visibility.Visible;
+        }
+
+        private void chkbox_tableHeader_Unhecked(object sender, RoutedEventArgs e)
+        {
+            txt_tableHeader.Visibility = Visibility.Collapsed;
+            lbl_tableHeaderContent.Visibility = Visibility.Collapsed;
+        }
+
         private void btnClearScreen_Click(object sender, RoutedEventArgs e)
         { // KDN - clears the canvas of any current textboxes and any text inside the output box
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
@@ -42,8 +54,16 @@ namespace LatexProject.GUI.MVVM.View
              * Problems: Can overflow is table was too large causing textbox to not fit on screen
              */
         { // KDN - Uses textbox input to create Latex code inside of textbox for easy copy/paste
+          // SDM - Added extra functionality to allow for table headers to be used.
             int rows = int.Parse(xCoord.Text);
             int columns = int.Parse(yCoord.Text);
+            bool tableHeader = false;
+
+            // Checks if tableheader checkbox is ticked and if so increments the rows to add the header row. - SDM
+            if(chkbox_tableHeader.IsChecked == true)
+            {
+                tableHeader = true;
+            }
 
             StringBuilder latexCode = new StringBuilder();
             latexCode.AppendLine("\\begin{tabular}{|");
@@ -54,9 +74,15 @@ namespace LatexProject.GUI.MVVM.View
             latexCode.AppendLine("}");
             latexCode.AppendLine("\\hline");
 
-            for (int i = 0; i < columns; i++)
+            // Adds the header row. - SDM
+            if (tableHeader)
             {
-                for (int j = 0; j < rows; j++)
+                latexCode.AppendLine("\\multicolumn{" + columns.ToString() + "}{|c|}{" + txt_tableHeader.Text + "} \\\\ \n \\hline");
+            }
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
                 {
                     TextBox textBox = (TextBox)canContainer.FindName("TextBox_" + i + "_" + j);
                     latexCode.Append(textBox.Text + " & ");
@@ -85,9 +111,9 @@ namespace LatexProject.GUI.MVVM.View
 
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb)); // clears any old textboxes if any
 
-            for (int i = 0; i < columns; i++)
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < rows; j++)
+                for (int j = 0; j < columns; j++)
                 {
                     
                     TextBox textBox = new TextBox();
