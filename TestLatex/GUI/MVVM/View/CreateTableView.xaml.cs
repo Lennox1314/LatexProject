@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,6 +53,67 @@ namespace LatexProject.GUI.MVVM.View
         {
             txt_tableCaption.Visibility = Visibility.Collapsed;
             lbl_tableCaption.Visibility = Visibility.Collapsed;
+        }
+
+        private void btnImportCSV_Click(object sender, RoutedEventArgs e) {
+            /*string[,] testvalues = new string[5, 5];
+
+            int test = 0;
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    testvalues[i, j] = test.ToString();
+                    test += 1;
+                }
+            }*/
+
+            string filePath = "";
+
+            // Opens a file dialog for the user to select a csv file to import
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            if (fileDialog.ShowDialog() == true) {
+                filePath = fileDialog.FileName;
+            }
+
+            var reader = new StreamReader(File.OpenRead(filePath));
+            List<List<string>> lines = new List<List<string>>();
+            while (!reader.EndOfStream) {
+                List<string> valuesList = new List<string>();
+                var line = reader.ReadLine();
+                var values = line.Split(',');
+                foreach(string value in values){
+                    valuesList.Add(value);
+                }
+                lines.Add(valuesList);
+            }
+
+            int rows = lines.Count;
+            int columns = lines.First().Count;
+            xCoord.Text = rows.ToString();
+            yCoord.Text = columns.ToString();
+            double textBoxWidth = 40;
+            double textBoxHeight = 20;
+
+            canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb)); // clears any old textboxes if any
+
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+
+                    TextBox textBox = new TextBox();
+                    string textBoxName = "TextBox_" + i + "_" + j;
+                    if (canContainer.FindName(textBoxName) != null) {
+                        canContainer.UnregisterName(textBoxName);
+                        canContainer.Children.Remove(canContainer.FindName(textBoxName) as TextBox);
+                    }
+                    textBox.Width = textBoxWidth;
+                    textBox.Height = textBoxHeight;
+                    textBox.Name = textBoxName;
+                    textBox.Text = lines[i][j];
+                    RegisterName(textBox.Name, textBox);
+                    Canvas.SetLeft(textBox, j * textBoxWidth);
+                    Canvas.SetTop(textBox, i * textBoxHeight);
+                    canContainer.Children.Add(textBox);
+                }
+            }
         }
 
         private void btnClearScreen_Click(object sender, RoutedEventArgs e)
