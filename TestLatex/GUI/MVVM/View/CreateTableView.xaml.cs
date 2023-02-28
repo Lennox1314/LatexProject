@@ -121,7 +121,7 @@ namespace LatexProject.GUI.MVVM.View
         private void btnClearScreen_Click(object sender, RoutedEventArgs e)
         { // KDN - clears the canvas of any current textboxes and any text inside the output box
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
-
+            canGrid.Children.OfType<TextBox>().ToList().ForEach(tb => canGrid.Children.Remove(tb));
             LaTeXCodeTextBox.Text = "";
 
         }
@@ -202,8 +202,11 @@ namespace LatexProject.GUI.MVVM.View
         private void btnCreateGrid_Click(object sender, RoutedEventArgs e)
         { // KDN - creates a grid of textboxes that after a certain size will become scrollable 
             // get the dimensions of the grid
-            rows = int.Parse(xCoord.Text);
-            columns = int.Parse(yCoord.Text);
+            if (xCoord.Text != "" && yCoord.Text != "")
+            {
+                rows = int.Parse(xCoord.Text);
+                columns = int.Parse(yCoord.Text);
+            }
 
             // set the dimensions of each cell
             double textBoxWidth = 40;
