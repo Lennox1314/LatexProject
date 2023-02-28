@@ -19,16 +19,8 @@
   <Class Name="LatexProject.MainWindow" Collapsed="true">
     <Position X="4.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAAAAAAAEAAAAAARAAABAA=</HashCode>
+      <HashCode>AAAAAAAAAAAIAAAEAAAAAAAAAAAAAEAAAAAARAAABAA=</HashCode>
       <FileName>MainWindow.xaml.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="LatexProject.GUI.MVVM.View.CreateTableView" Collapsed="true">
-    <Position X="6.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAICAABAAAAAAAAkAAAAIAAAAAAAAAAAAgAA=</HashCode>
-      <FileName>GUI\MVVM\View\CreateTableView.xaml.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
@@ -90,6 +82,14 @@
       <HashCode>AAAAAQACEAEAAEAAAAEIAAAIQAAAACAAAAAAAAAAAAA=</HashCode>
       <FileName>GUI\MVVM\ViewModel\MainViewModel.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="LatexProject.GUI.MVVM.View.CreateTableView" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAICAABAAEAAAACkAAAgJAAAAAAAQAAAAgAA=</HashCode>
+      <FileName>GUI\MVVM\View\CreateTableView.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

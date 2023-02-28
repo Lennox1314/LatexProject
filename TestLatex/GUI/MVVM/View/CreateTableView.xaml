@@ -13,9 +13,9 @@
         <TextBox x:Name="xCoord" HorizontalAlignment="Left" Margin="6,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="56" Height="18"/>
         <TextBox x:Name="yCoord" HorizontalAlignment="Left" Margin="68,50,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="59"/>
         <TextBlock Text="Enter the size of table you want to create" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14"/>
-        <Button x:Name="btncreateOutput" Content="Create Output" HorizontalAlignment="Left" Margin="6,143,0,0" VerticalAlignment="Top" Click="btnCreateOutput_Click"/>
+        <Button x:Name="btncreateOutput" Content="Create Output" HorizontalAlignment="Left" Margin="6,168,0,0" VerticalAlignment="Top" Click="btnCreateOutput_Click"/>
         <TextBox x:Name="LaTeXCodeTextBox" HorizontalAlignment="Left" Margin="6,193,0,0" TextWrapping="Wrap" Text="Latex Ouput" VerticalAlignment="Top"  Width="200"/>
-        <Button x:Name="btnClearScreen" Content="Clear" HorizontalAlignment="Left" Margin="6,168,0,0" VerticalAlignment="Top" Click="btnClearScreen_Click"/>
+        <Button x:Name="btnClearScreen" Content="Clear" HorizontalAlignment="Left" Margin="111,168,0,0" VerticalAlignment="Top" Click="btnClearScreen_Click" RenderTransformOrigin="-0.18,1.097"/>
         <Label x:Name="lbl_rows" Content="Rows" HorizontalAlignment="Left" Margin="15,31,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="3.762,1.581"/>
         <Label x:Name="lbl_columns" Content="Columns" HorizontalAlignment="Left" Margin="68,31,0,0" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.463,0.691"/>
         <CheckBox x:Name="chkbox_tableHeader" Content="Table Header?" HorizontalAlignment="Left" Margin="6,77,0,0" VerticalAlignment="Top" Foreground="White" Checked="chkbox_tableHeader_Checked" IsChecked="False" Unchecked="chkbox_tableHeader_Unhecked"/>
@@ -24,6 +24,6 @@
         <CheckBox x:Name="chkbox_tableCaption" Content="Table Caption?" HorizontalAlignment="Left" Margin="151,77,0,0" VerticalAlignment="Top" Foreground="White" Checked="chkbox_tableCaption_Checked" IsChecked="False" Unchecked="chkbox_tableCaption_Unchecked"/>
         <Label x:Name="lbl_tableCaption" Content="Enter Table Caption" HorizontalAlignment="Left" Margin="151,89,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Collapsed"/>
         <TextBox x:Name="txt_tableCaption" HorizontalAlignment="Left" Margin="151,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
-        <Button x:Name="btnImportCSV" Content="Import from CSV file" HorizontalAlignment="Left" Margin="6,103,0,0" VerticalAlignment="Top" Width="121" Click="btnImportCSV_Click"/>
+        <Button x:Name="btnImportCSV" Content="Import from CSV file" HorizontalAlignment="Left" Margin="6,143,0,0" VerticalAlignment="Top" Width="121" Click="btnImportCSV_Click"/>
     </Grid>
 </UserControl>

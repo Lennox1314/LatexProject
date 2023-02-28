@@ -172,7 +172,7 @@ namespace LatexProject.GUI.MVVM.View
                 for (int j = 0; j < columns; j++)
                 {
                     TextBox textBox = (TextBox)canContainer.FindName("TextBox_" + i + "_" + j);
-                    latexCode.Append(textBox.Text + " & ");
+                    latexCode.Append(textBox.Text + " & "); // need to put exception for null here ---------
                 }
                 latexCode.Length -= 3;
                 latexCode.AppendLine("\\\\ \\hline");
@@ -201,6 +201,11 @@ namespace LatexProject.GUI.MVVM.View
             // set the dimensions of each cell
             double textBoxWidth = 40;
             double textBoxHeight = 20;
+
+            // create a canvas to hold the grid
+            Canvas canGrid = new Canvas();
+            canGrid.Width = textBoxWidth * columns;
+            canGrid.Height = textBoxHeight * rows;
 
             // clear any old textboxes
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
