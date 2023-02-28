@@ -26,7 +26,7 @@ namespace LatexProject.GUI.MVVM.View
         public EquationCreationView()
         {
             InitializeComponent();
-            // DataContext = new EquationCreationViewModel();
+          
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
