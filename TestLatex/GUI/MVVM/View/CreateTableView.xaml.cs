@@ -30,6 +30,8 @@ namespace LatexProject.GUI.MVVM.View
             InitializeComponent();
         }
         public int left, right, top, bottom = 0;
+        private int rows;
+        private int columns;
         public Canvas canGrid;
         public ScrollViewer scrollViewer;
 
@@ -88,10 +90,8 @@ namespace LatexProject.GUI.MVVM.View
                 lines.Add(valuesList);
             }
 
-            int rows = lines.Count;
-            int columns = lines.First().Count;
-            xCoord.Text = rows.ToString();
-            yCoord.Text = columns.ToString();
+            rows = lines.Count;
+            columns = lines.First().Count;
             double textBoxWidth = 40;
             double textBoxHeight = 20;
 
@@ -132,8 +132,6 @@ namespace LatexProject.GUI.MVVM.View
              */
         { // KDN - Uses textbox input to create Latex code inside of textbox for easy copy/paste
           // SDM - Added extra functionality to allow for table headers to be used.
-            int rows = int.Parse(xCoord.Text);
-            int columns = int.Parse(yCoord.Text);
             bool tableHeader = false;
             bool tableCaption = false;
 
@@ -204,8 +202,8 @@ namespace LatexProject.GUI.MVVM.View
         private void btnCreateGrid_Click(object sender, RoutedEventArgs e)
         { // KDN - creates a grid of textboxes that after a certain size will become scrollable 
             // get the dimensions of the grid
-            int rows = int.Parse(xCoord.Text);
-            int columns = int.Parse(yCoord.Text);
+            rows = int.Parse(xCoord.Text);
+            columns = int.Parse(yCoord.Text);
 
             // set the dimensions of each cell
             double textBoxWidth = 40;
