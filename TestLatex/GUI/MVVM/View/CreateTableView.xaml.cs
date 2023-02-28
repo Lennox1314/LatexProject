@@ -95,27 +95,52 @@ namespace LatexProject.GUI.MVVM.View
             double textBoxWidth = 40;
             double textBoxHeight = 20;
 
-            canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb)); // clears any old textboxes if any
 
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < columns; j++) {
+            // create a canvas to hold the grid
+            canGrid = new Canvas();
+            canGrid.Width = textBoxWidth * columns;
+            canGrid.Height = textBoxHeight * rows;
 
+            NameScope.SetNameScope(canGrid, new NameScope());
+
+            // clear any old textboxes
+            canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
                     TextBox textBox = new TextBox();
                     string textBoxName = "TextBox_" + i + "_" + j;
-                    if (canContainer.FindName(textBoxName) != null) {
-                        canContainer.UnregisterName(textBoxName);
-                        canContainer.Children.Remove(canContainer.FindName(textBoxName) as TextBox);
+                    if (canGrid.FindName(textBoxName) != null)
+                    {
+                        canGrid.UnregisterName(textBoxName);
+                        canGrid.Children.Remove(canGrid.FindName(textBoxName) as TextBox);
                     }
+
                     textBox.Width = textBoxWidth;
                     textBox.Height = textBoxHeight;
                     textBox.Name = textBoxName;
                     textBox.Text = lines[i][j];
-                    RegisterName(textBox.Name, textBox);
+                    canGrid.Children.Add(textBox);
                     Canvas.SetLeft(textBox, j * textBoxWidth);
                     Canvas.SetTop(textBox, i * textBoxHeight);
-                    canContainer.Children.Add(textBox);
+
+                    canGrid.RegisterName(textBoxName, textBox);
                 }
             }
+
+            // create a scroll viewer to hold the canvas
+            scrollViewer = new ScrollViewer();
+            scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            scrollViewer.Width = 300;
+            scrollViewer.Height = 160;
+            scrollViewer.Content = canGrid;
+
+            // add the scroll viewer to the main container
+            canContainer.Children.Clear();
+            canContainer.Children.Add(scrollViewer);
         }
 
         private void btnClearScreen_Click(object sender, RoutedEventArgs e)
