@@ -128,7 +128,7 @@ namespace LatexProject.GUI.MVVM.View
 
         private void btnCreateOutput_Click(object sender, RoutedEventArgs e)
             /* 2/7/23
-             * Problems: Can overflow is table was too large causing textbox to not fit on screen
+             * Problems: 
              */
         { // KDN - Uses textbox input to create Latex code inside of textbox for easy copy/paste
           // SDM - Added extra functionality to allow for table headers to be used.

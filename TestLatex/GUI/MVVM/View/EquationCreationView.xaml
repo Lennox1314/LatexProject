@@ -14,7 +14,9 @@
                 <MenuItem.Icon>
                     <Image Source="/GUI/Images/ExitButton.png"/>
                 </MenuItem.Icon>
-                <MenuItem Header="Infinity" Click="MenuItem_Click" Tag="\infty"/>
+                <MenuItem Click="MenuItem_Click" Tag="\infty">
+                    <Image Source="/GUI/Images/infinity.png"/>
+                </MenuItem>
                 <MenuItem Header="Pi" Click="MenuItem_Click" Tag="\pi"/>
                 <MenuItem Header="Delta" Click="MenuItem_Click" Tag="\delta"/>
                 <MenuItem Header="Sum" Click="MenuItem_Click" Tag="\sum"/>
