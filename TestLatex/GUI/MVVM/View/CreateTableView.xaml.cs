@@ -77,51 +77,85 @@ namespace LatexProject.GUI.MVVM.View
             if (fileDialog.ShowDialog() == true) {
                 filePath = fileDialog.FileName;
             }
-
-            var reader = new StreamReader(File.OpenRead(filePath));
-            List<List<string>> lines = new List<List<string>>();
-            while (!reader.EndOfStream) {
-                List<string> valuesList = new List<string>();
-                var line = reader.ReadLine();
-                var values = line.Split(',');
-                foreach(string value in values){
-                    valuesList.Add(value);
-                }
-                lines.Add(valuesList);
-            }
-
-            rows = lines.Count;
-            columns = lines.First().Count;
-            double textBoxWidth = 40;
-            double textBoxHeight = 20;
-
-            canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb)); // clears any old textboxes if any
-
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < columns; j++) {
-
-                    TextBox textBox = new TextBox();
-                    string textBoxName = "TextBox_" + i + "_" + j;
-                    if (canContainer.FindName(textBoxName) != null) {
-                        canContainer.UnregisterName(textBoxName);
-                        canContainer.Children.Remove(canContainer.FindName(textBoxName) as TextBox);
+            try
+            {
+                var reader = new StreamReader(File.OpenRead(filePath));
+                List<List<string>> lines = new List<List<string>>();
+                while (!reader.EndOfStream)
+                {
+                    List<string> valuesList = new List<string>();
+                    var line = reader.ReadLine();
+                    var values = line.Split(',');
+                    foreach (string value in values)
+                    {
+                        valuesList.Add(value);
                     }
-                    textBox.Width = textBoxWidth;
-                    textBox.Height = textBoxHeight;
-                    textBox.Name = textBoxName;
-                    textBox.Text = lines[i][j];
-                    RegisterName(textBox.Name, textBox);
-                    Canvas.SetLeft(textBox, j * textBoxWidth);
-                    Canvas.SetTop(textBox, i * textBoxHeight);
-                    canContainer.Children.Add(textBox);
+                    lines.Add(valuesList);
                 }
+
+
+                rows = lines.Count;
+                columns = lines.First().Count;
+                double textBoxWidth = 40;
+                double textBoxHeight = 20;
+
+
+                // create a canvas to hold the grid
+                canGrid = new Canvas();
+                canGrid.Width = textBoxWidth * columns;
+                canGrid.Height = textBoxHeight * rows;
+
+                NameScope.SetNameScope(canGrid, new NameScope());
+
+                // clear any old textboxes
+                canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
+
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        TextBox textBox = new TextBox();
+                        string textBoxName = "TextBox_" + i + "_" + j;
+                        if (canGrid.FindName(textBoxName) != null)
+                        {
+                            canGrid.UnregisterName(textBoxName);
+                            canGrid.Children.Remove(canGrid.FindName(textBoxName) as TextBox);
+                        }
+
+                        textBox.Width = textBoxWidth;
+                        textBox.Height = textBoxHeight;
+                        textBox.Name = textBoxName;
+                        textBox.Text = lines[i][j];
+                        canGrid.Children.Add(textBox);
+                        Canvas.SetLeft(textBox, j * textBoxWidth);
+                        Canvas.SetTop(textBox, i * textBoxHeight);
+
+                        canGrid.RegisterName(textBoxName, textBox);
+                    }
+                }
+
+                // create a scroll viewer to hold the canvas
+                scrollViewer = new ScrollViewer();
+                scrollViewer.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+                scrollViewer.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+                scrollViewer.Width = 300;
+                scrollViewer.Height = 160;
+                scrollViewer.Content = canGrid;
+
+                // add the scroll viewer to the main container
+                canContainer.Children.Clear();
+                canContainer.Children.Add(scrollViewer);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error ocurred. Please try again.");
             }
         }
 
         private void btnClearScreen_Click(object sender, RoutedEventArgs e)
         { // KDN - clears the canvas of any current textboxes and any text inside the output box
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
-
+            canGrid.Children.OfType<TextBox>().ToList().ForEach(tb => canGrid.Children.Remove(tb));
             LaTeXCodeTextBox.Text = "";
 
         }
@@ -202,8 +236,11 @@ namespace LatexProject.GUI.MVVM.View
         private void btnCreateGrid_Click(object sender, RoutedEventArgs e)
         { // KDN - creates a grid of textboxes that after a certain size will become scrollable 
             // get the dimensions of the grid
-            rows = int.Parse(xCoord.Text);
-            columns = int.Parse(yCoord.Text);
+            if (xCoord.Text != "" && yCoord.Text != "")
+            {
+                rows = int.Parse(xCoord.Text);
+                columns = int.Parse(yCoord.Text);
+            }
 
             // set the dimensions of each cell
             double textBoxWidth = 40;
