@@ -35,6 +35,18 @@ namespace LatexProject.GUI.MVVM.View
         public Canvas canGrid;
         public ScrollViewer scrollViewer;
 
+
+        private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if(stkMenuDisplay.Visibility == Visibility.Collapsed)
+            {
+                stkMenuDisplay.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                stkMenuDisplay.Visibility = Visibility.Collapsed;
+            }
+        }
         private void chkbox_tableHeader_Checked(object sender, RoutedEventArgs e)
         {
             txt_tableHeader.Visibility = Visibility.Visible;
@@ -170,16 +182,16 @@ namespace LatexProject.GUI.MVVM.View
             bool tableCaption = false;
 
             // Checks if tableheader checkbox is ticked and if so updates the bool value. - SDM
-            if(chkbox_tableHeader.IsChecked == true)
-            {
-                tableHeader = true;
-            }
+           // if(chkbox_tableHeader.IsChecked == true)
+           // {
+            //    tableHeader = true;
+           // }
 
             // Checks if tableCaption checkbox is ticked and if so updates the bool value. - SDM
-            if(chkbox_tableCaption.IsChecked == true)
-            {
-                tableCaption = true;
-            }
+           // if(chkbox_tableCaption.IsChecked == true)
+           // {
+           //     tableCaption = true;
+           // }
 
             StringBuilder latexCode = new StringBuilder();
             latexCode.AppendLine("\\begin{table}[h]");
