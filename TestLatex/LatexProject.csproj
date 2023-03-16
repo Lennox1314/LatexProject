@@ -8,9 +8,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="GUI\Images\align-center.png" />
+    <None Remove="GUI\Images\align-left.png" />
+    <None Remove="GUI\Images\align-right.png" />
+    <None Remove="GUI\Images\bold.png" />
+    <None Remove="GUI\Images\border.png" />
+    <None Remove="GUI\Images\captionIcon.png" />
+    <None Remove="GUI\Images\clear-formatting.png" />
+    <None Remove="GUI\Images\clear_table.png" />
+    <None Remove="GUI\Images\colsIcon.png" />
+    <None Remove="GUI\Images\copy-to-clipboard.png" />
     <None Remove="GUI\Images\ExitButton.png" />
+    <None Remove="GUI\Images\fill-color.png" />
+    <None Remove="GUI\Images\folderIcon.png" />
+    <None Remove="GUI\Images\font-size.png" />
+    <None Remove="GUI\Images\infinity.png" />
+    <None Remove="GUI\Images\italic.png" />
     <None Remove="GUI\Images\MaximizeButton.png" />
+    <None Remove="GUI\Images\menu-rounded.png" />
+    <None Remove="GUI\Images\merge-cells.png" />
     <None Remove="GUI\Images\MinimizeButton.png" />
+    <None Remove="GUI\Images\Pi.png" />
+    <None Remove="GUI\Images\remove-borders.png" />
+    <None Remove="GUI\Images\rowsIcon.png" />
+    <None Remove="GUI\Images\select-all-48.png" />
+    <None Remove="GUI\Images\split-cells.png" />
+    <None Remove="GUI\Images\text-color.png" />
+    <None Remove="GUI\Images\underline.png" />
+    <None Remove="GUI\Images\verticalAlign.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,9 +44,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="GUI\Images\align-center.png" />
+    <Resource Include="GUI\Images\align-left.png" />
+    <Resource Include="GUI\Images\align-right.png" />
+    <Resource Include="GUI\Images\bold.png" />
+    <Resource Include="GUI\Images\border.png" />
+    <Resource Include="GUI\Images\captionIcon.png" />
+    <Resource Include="GUI\Images\clear-formatting.png" />
+    <Resource Include="GUI\Images\clear_table.png" />
+    <Resource Include="GUI\Images\colsIcon.png" />
+    <Resource Include="GUI\Images\copy-to-clipboard.png" />
     <Resource Include="GUI\Images\ExitButton.png" />
+    <Resource Include="GUI\Images\fill-color.png" />
+    <Resource Include="GUI\Images\folderIcon.png" />
+    <Resource Include="GUI\Images\font-size.png" />
+    <Resource Include="GUI\Images\infinity.png" />
+    <Resource Include="GUI\Images\italic.png" />
     <Resource Include="GUI\Images\MaximizeButton.png" />
+    <Resource Include="GUI\Images\menu-rounded.png" />
+    <Resource Include="GUI\Images\merge-cells.png" />
     <Resource Include="GUI\Images\MinimizeButton.png" />
+    <Resource Include="GUI\Images\Pi.png" />
+    <Resource Include="GUI\Images\remove-borders.png" />
+    <Resource Include="GUI\Images\rowsIcon.png" />
+    <Resource Include="GUI\Images\select-all-48.png" />
+    <Resource Include="GUI\Images\split-cells.png" />
+    <Resource Include="GUI\Images\text-color.png" />
+    <Resource Include="GUI\Images\underline.png" />
+    <Resource Include="GUI\Images\verticalAlign.png" />
   </ItemGroup>
 
 </Project>
