@@ -40,10 +40,10 @@
                 <Button x:Name="btnBackgroundColor" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,5,0,0" Width="25">
                     <Image Source="/GUI/Images/fill-color.png"/>
                 </Button>
-                <Button x:Name="btnBold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
+                <Button x:Name="btnBold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Bold">
                     <Image Source="/GUI/Images/bold.png" MouseLeftButtonDown="BoldButton_Click"/>
                 </Button>
-                <Button x:Name="btnItalic" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
+                <Button x:Name="btnItalic" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Italisize">
                     <Image Source="/GUI/Images/italic.png" MouseLeftButtonDown="ItalisizeButton_Click"/>
                 </Button>
                 <Button x:Name="btnUnderline" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
@@ -99,7 +99,7 @@
             <StackPanel Orientation="Vertical">
                 <Button x:Name="btncreateOutput" Content="Generate Code" HorizontalAlignment="Left" Margin="75,5,0,0" VerticalAlignment="Top" Foreground="White" Background="Black" BorderThickness="0" Click="btnCreateOutput_Click"/>
                 <StackPanel Orientation="Vertical">
-                    <Button x:Name="btnCopyText"  HorizontalAlignment="Left" Margin="75,5,0,0" VerticalAlignment="Top" Foreground="White" Background="Black" BorderThickness="0" Click="btnCreateCopyText_Click" Width="81" Height="18">
+                    <Button x:Name="btnCopyText"  HorizontalAlignment="Left" Margin="75,5,0,0" VerticalAlignment="Top" Foreground="White" Background="Black" BorderThickness="0" Click="btnCreateCopyText_Click" Width="81" Height="18" ToolTip="Copies the generated text to clipboard.">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/GUI/Images/copy-to-clipboard.png"/>
                             <Label Content="Copy Text" Foreground="White" FontSize="8" Height="20" VerticalAlignment="Center"/>
