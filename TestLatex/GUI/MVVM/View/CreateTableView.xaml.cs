@@ -34,7 +34,6 @@ namespace LatexProject.GUI.MVVM.View
         private int columns;
         public Canvas canGrid;
         public ScrollViewer scrollViewer;
-        private StringBuilder latexCode = new StringBuilder();
 
 
         private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
@@ -164,12 +163,20 @@ namespace LatexProject.GUI.MVVM.View
         private void BoldButton_Click(object sender, MouseButtonEventArgs e)
         {
             // SDM - Bolds the selected text.
-
+            foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+            {
+                if (tb.IsSelectionActive && tb.FontWeight != FontWeights.Bold)
+                {
+                    tb.FontWeight= FontWeights.Bold;
+                } else if (tb.IsSelectionActive && tb.FontWeight == FontWeights.Bold)
+                {
+                    tb.FontWeight = FontWeights.Normal;
+                }
+            }
         }
 
         private void btnClearScreen_Click(object sender, RoutedEventArgs e)
         { // KDN - clears the canvas of any current textboxes and any text inside the output box
-            latexCode = latexCode.Clear();
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
             if (canGrid != null)
             {
@@ -180,10 +187,18 @@ namespace LatexProject.GUI.MVVM.View
 
         }
 
-        private void createLatexString()
+        private void BoldButton_Hover(object sender, MouseEventArgs e)
         {
-            latexCode = latexCode.Clear();
+            
+        }
 
+        private void btnCreateOutput_Click(object sender, RoutedEventArgs e)
+            /* 2/7/23
+             * Problems: 
+             */
+        { // KDN - Uses textbox input to create Latex code inside of textbox for easy copy/paste
+          // SDM - Added extra functionality to allow for table headers to be used.
+            StringBuilder latexCode = new StringBuilder();
             // Checks if tableheader checkbox is ticked and if so updates the bool value. - SDM
             // if(chkbox_tableHeader.IsChecked == true)
             // {
@@ -223,11 +238,19 @@ namespace LatexProject.GUI.MVVM.View
                     if (textBox == null)
                     {
                         latexCode.Append(" & "); // need to put exception for null here ---------
-                    }
-                    else
+                    } else
                     {
                         latexCode.Append(textBox.Text + " & ");
                     }
+
+                    if(textBox.FontWeight == FontWeights.Bold)
+                    {
+                        string oldString = latexCode.ToString();
+                        int index = oldString.IndexOf(textBox.Text);
+                        latexCode.Insert(index, "\\textbf{");
+                        int endIndex = textBox.Text.Length + latexCode.ToString().IndexOf(textBox.Text);
+                        latexCode.Insert(endIndex, "}");
+}
                 }
                 latexCode.Length -= 3;
                 latexCode.AppendLine("\\\\ \\hline");
@@ -241,15 +264,6 @@ namespace LatexProject.GUI.MVVM.View
             }*/
 
             latexCode.AppendLine("\\end{table}");
-        }
-
-        private void btnCreateOutput_Click(object sender, RoutedEventArgs e)
-            /* 2/7/23
-             * Problems: 
-             */
-        { // KDN - Uses textbox input to create Latex code inside of textbox for easy copy/paste
-          // SDM - Added extra functionality to allow for table headers to be used.
-            createLatexString();
             LaTeXCodeTextBox.Text = latexCode.ToString();
         }
 

@@ -41,7 +41,7 @@
                     <Image Source="/GUI/Images/fill-color.png"/>
                 </Button>
                 <Button x:Name="btnBold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
-                    <Image Source="/GUI/Images/bold.png" MouseLeftButtonDown="BoldButton_Click"/>
+                    <Image Source="/GUI/Images/bold.png" MouseLeftButtonDown="BoldButton_Click" MouseEnter="BoldButton_Hover"/>
                 </Button>
                 <Button x:Name="btnItalic" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
                     <Image Source="/GUI/Images/italic.png"/>
