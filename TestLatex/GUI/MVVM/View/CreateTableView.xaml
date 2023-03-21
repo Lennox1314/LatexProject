@@ -99,7 +99,7 @@
             <StackPanel Orientation="Vertical">
                 <Button x:Name="btncreateOutput" Content="Generate Code" HorizontalAlignment="Left" Margin="75,5,0,0" VerticalAlignment="Top" Foreground="White" Background="Black" BorderThickness="0" Click="btnCreateOutput_Click"/>
                 <StackPanel Orientation="Vertical">
-                    <Button x:Name="btnCopyText"  HorizontalAlignment="Left" Margin="75,5,0,0" VerticalAlignment="Top" Foreground="White" Background="Black" BorderThickness="0" Click="btnCreateOutput_Click" Width="81" Height="18">
+                    <Button x:Name="btnCopyText"  HorizontalAlignment="Left" Margin="75,5,0,0" VerticalAlignment="Top" Foreground="White" Background="Black" BorderThickness="0" Click="btnCreateCopyText_Click" Width="81" Height="18">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="/GUI/Images/copy-to-clipboard.png"/>
                             <Label Content="Copy Text" Foreground="White" FontSize="8" Height="20" VerticalAlignment="Center"/>

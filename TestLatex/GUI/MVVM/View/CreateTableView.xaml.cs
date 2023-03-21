@@ -164,6 +164,11 @@ namespace LatexProject.GUI.MVVM.View
             }
         }
 
+        private void btnCreateCopyText_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(LaTeXCodeTextBox.Text);
+        }
+
         private void btnClearScreen_Click(object sender, RoutedEventArgs e)
         { // KDN - clears the canvas of any current textboxes and any text inside the output box
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
