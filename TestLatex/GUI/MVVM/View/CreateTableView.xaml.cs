@@ -175,6 +175,21 @@ namespace LatexProject.GUI.MVVM.View
             }
         }
 
+        private void ItalisizeButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            // SDM - Italisizes the selected text.
+            foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+            {
+                if(tb.IsSelectionActive && tb.FontStyle != FontStyles.Italic)
+                {
+                    tb.FontStyle = FontStyles.Italic;
+                } else if (tb.IsSelectionActive && tb.FontStyle == FontStyles.Italic)
+                {
+                    tb.FontStyle = FontStyles.Normal;
+                }
+            }
+        }
+
         private void btnClearScreen_Click(object sender, RoutedEventArgs e)
         { // KDN - clears the canvas of any current textboxes and any text inside the output box
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
@@ -185,11 +200,6 @@ namespace LatexProject.GUI.MVVM.View
             }
             LaTeXCodeTextBox.Text = "";
 
-        }
-
-        private void BoldButton_Hover(object sender, MouseEventArgs e)
-        {
-            
         }
 
         private void btnCreateOutput_Click(object sender, RoutedEventArgs e)
@@ -250,7 +260,16 @@ namespace LatexProject.GUI.MVVM.View
                         latexCode.Insert(index, "\\textbf{");
                         int endIndex = textBox.Text.Length + latexCode.ToString().IndexOf(textBox.Text);
                         latexCode.Insert(endIndex, "}");
-}
+                    }
+
+                    if(textBox.FontStyle == FontStyles.Italic)
+                    {
+                        string oldString = latexCode.ToString();
+                        int index = oldString.IndexOf(textBox.Text);
+                        latexCode.Insert(index, "\\textit{");
+                        int endIndex = textBox.Text.Length + latexCode.ToString().IndexOf(textBox.Text);
+                        latexCode.Insert(endIndex, "}");
+                    }
                 }
                 latexCode.Length -= 3;
                 latexCode.AppendLine("\\\\ \\hline");
