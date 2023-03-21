@@ -34,6 +34,7 @@ namespace LatexProject.GUI.MVVM.View
         private int columns;
         public Canvas canGrid;
         public ScrollViewer scrollViewer;
+        private StringBuilder latexCode = new StringBuilder();
 
 
         private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
@@ -72,16 +73,6 @@ namespace LatexProject.GUI.MVVM.View
         }
 
         private void btnImportCSV_Click(object sender, RoutedEventArgs e) {
-            /*string[,] testvalues = new string[5, 5];
-
-            int test = 0;
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    testvalues[i, j] = test.ToString();
-                    test += 1;
-                }
-            }*/
-
             string filePath = "";
 
             // Opens a file dialog for the user to select a csv file to import
@@ -166,39 +157,44 @@ namespace LatexProject.GUI.MVVM.View
 
         private void btnCreateCopyText_Click(object sender, RoutedEventArgs e)
         {
+            // SDM - Copies the generated text to the user's clipboard.
             Clipboard.SetText(LaTeXCodeTextBox.Text);
+        }
+
+        private void BoldButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            // SDM - Bolds the selected text.
+
         }
 
         private void btnClearScreen_Click(object sender, RoutedEventArgs e)
         { // KDN - clears the canvas of any current textboxes and any text inside the output box
+            latexCode = latexCode.Clear();
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
-            canGrid.Children.OfType<TextBox>().ToList().ForEach(tb => canGrid.Children.Remove(tb));
+            if (canGrid != null)
+            {
+                canGrid.Children.OfType<TextBox>().ToList().ForEach(tb => tb.Clear());
+                canGrid.Children.OfType<TextBox>().ToList().ForEach(tb => canGrid.Children.Remove(tb));
+            }
             LaTeXCodeTextBox.Text = "";
 
         }
 
-        private void btnCreateOutput_Click(object sender, RoutedEventArgs e)
-            /* 2/7/23
-             * Problems: 
-             */
-        { // KDN - Uses textbox input to create Latex code inside of textbox for easy copy/paste
-          // SDM - Added extra functionality to allow for table headers to be used.
-            bool tableHeader = false;
-            bool tableCaption = false;
+        private void createLatexString()
+        {
+            latexCode = latexCode.Clear();
 
             // Checks if tableheader checkbox is ticked and if so updates the bool value. - SDM
-           // if(chkbox_tableHeader.IsChecked == true)
-           // {
+            // if(chkbox_tableHeader.IsChecked == true)
+            // {
             //    tableHeader = true;
-           // }
+            // }
 
             // Checks if tableCaption checkbox is ticked and if so updates the bool value. - SDM
-           // if(chkbox_tableCaption.IsChecked == true)
-           // {
-           //     tableCaption = true;
-           // }
-
-            StringBuilder latexCode = new StringBuilder();
+            // if(chkbox_tableCaption.IsChecked == true)
+            // {
+            //     tableCaption = true;
+            // }
             latexCode.AppendLine("\\begin{table}[h]");
 
             // Starts the table centered. - SDM
@@ -213,10 +209,11 @@ namespace LatexProject.GUI.MVVM.View
             latexCode.AppendLine("\\hline");
 
             // Adds the header row. - SDM
+            /*
             if (tableHeader)
             {
                 latexCode.AppendLine("\\multicolumn{" + columns.ToString() + "}{|c|}{" + txt_tableHeader.Text + "} \\\\ \n \\hline");
-            }
+            }*/
 
             for (int i = 0; i < rows; i++)
             {
@@ -237,14 +234,22 @@ namespace LatexProject.GUI.MVVM.View
             }
 
             latexCode.AppendLine("\\end{tabular}");
-
-            if(tableCaption)
+            /*
+            if (tableCaption)
             {
                 latexCode.AppendLine("\\caption{" + txt_tableCaption.Text + "}");
-            }
+            }*/
 
             latexCode.AppendLine("\\end{table}");
+        }
 
+        private void btnCreateOutput_Click(object sender, RoutedEventArgs e)
+            /* 2/7/23
+             * Problems: 
+             */
+        { // KDN - Uses textbox input to create Latex code inside of textbox for easy copy/paste
+          // SDM - Added extra functionality to allow for table headers to be used.
+            createLatexString();
             LaTeXCodeTextBox.Text = latexCode.ToString();
         }
 
