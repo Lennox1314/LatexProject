@@ -32,6 +32,8 @@ namespace LatexProject.GUI.MVVM.View
         public int left, right, top, bottom = 0;
         private int rows;
         private int columns;
+        //private string tableHeader = "";
+        private string tableCaption = "";
         public Canvas canGrid;
         public ScrollViewer scrollViewer;
 
@@ -46,29 +48,6 @@ namespace LatexProject.GUI.MVVM.View
             {
                 stkMenuDisplay.Visibility = Visibility.Collapsed;
             }
-        }
-        private void chkbox_tableHeader_Checked(object sender, RoutedEventArgs e)
-        {
-            txt_tableHeader.Visibility = Visibility.Visible;
-            lbl_tableHeaderContent.Visibility = Visibility.Visible;
-        }
-
-        private void chkbox_tableHeader_Unhecked(object sender, RoutedEventArgs e)
-        {
-            txt_tableHeader.Visibility = Visibility.Collapsed;
-            lbl_tableHeaderContent.Visibility = Visibility.Collapsed;
-        }
-
-        private void chkbox_tableCaption_Checked(object sender, RoutedEventArgs e)
-        {
-            txt_tableCaption.Visibility = Visibility.Visible;
-            lbl_tableCaption.Visibility = Visibility.Visible;
-        }
-
-        private void chkbox_tableCaption_Unchecked(object sender, RoutedEventArgs e)
-        {
-            txt_tableCaption.Visibility = Visibility.Collapsed;
-            lbl_tableCaption.Visibility = Visibility.Collapsed;
         }
 
         private void btnImportCSV_Click(object sender, RoutedEventArgs e) {
@@ -227,6 +206,12 @@ namespace LatexProject.GUI.MVVM.View
             }
         }
 
+        private void TableCaptionButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            // SDM - Prompts the user for a table caption.
+            tableCaption = Microsoft.VisualBasic.Interaction.InputBox("Enter the caption for the table:", "Table Caption", ""); 
+        }
+
         private void ClearTableButton_Click(object sender, MouseButtonEventArgs e)
         {
             // KDN - clears the canvas of any current textboxes and any text inside the output box
@@ -248,12 +233,6 @@ namespace LatexProject.GUI.MVVM.View
         { // KDN - Uses textbox input to create Latex code inside of textbox for easy copy/paste
           // SDM - Added extra functionality to allow for table headers to be used.
             StringBuilder latexCode = new StringBuilder();
-            // Checks if tableheader checkbox is ticked and if so updates the bool value. - SDM
-            // if(chkbox_tableHeader.IsChecked == true)
-            // {
-            //    tableHeader = true;
-            // }
-
             // Checks if tableCaption checkbox is ticked and if so updates the bool value. - SDM
             // if(chkbox_tableCaption.IsChecked == true)
             // {
@@ -272,9 +251,8 @@ namespace LatexProject.GUI.MVVM.View
             latexCode.AppendLine("}");
             latexCode.AppendLine("\\hline");
 
-            // Adds the header row. - SDM
-            /*
-            if (tableHeader)
+            /* Adds the header row. - SDM
+            if (tableHeader != "")
             {
                 latexCode.AppendLine("\\multicolumn{" + columns.ToString() + "}{|c|}{" + txt_tableHeader.Text + "} \\\\ \n \\hline");
             }*/
@@ -322,11 +300,10 @@ namespace LatexProject.GUI.MVVM.View
             }
 
             latexCode.AppendLine("\\end{tabular}");
-            /*
-            if (tableCaption)
+            if (tableCaption != "")
             {
-                latexCode.AppendLine("\\caption{" + txt_tableCaption.Text + "}");
-            }*/
+                latexCode.AppendLine("\\caption{" + tableCaption + "}");
+            }
 
             latexCode.AppendLine("\\end{table}");
             LaTeXCodeTextBox.Text = latexCode.ToString();

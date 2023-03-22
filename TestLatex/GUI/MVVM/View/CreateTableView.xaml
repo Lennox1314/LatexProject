@@ -29,7 +29,7 @@
                     <Image Source="/GUI/Images/colsIcon.png" MouseLeftButtonDown="ColumnsButton_Click"/>
                 </Button>
                 <Button x:Name="btnAddCaption" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="25">
-                    <Image Source="/GUI/Images/captionIcon.png"/>
+                    <Image Source="/GUI/Images/captionIcon.png" MouseLeftButtonDown="TableCaptionButton_Click"/>
                 </Button>
                 <Button x:Name="btnImportCSV" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" Click="btnImportCSV_Click" ToolTip="Import a .csv file...">
                     <Image Source="/GUI/Images/folderIcon.png" Stretch="Uniform"/>
