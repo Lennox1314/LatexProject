@@ -142,14 +142,18 @@ namespace LatexProject.GUI.MVVM.View
         private void BoldButton_Click(object sender, MouseButtonEventArgs e)
         {
             // SDM - Bolds the selected text.
-            foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+            if (rows > 0 && columns > 0)
             {
-                if (tb.IsSelectionActive && tb.FontWeight != FontWeights.Bold)
+                foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
                 {
-                    tb.FontWeight= FontWeights.Bold;
-                } else if (tb.IsSelectionActive && tb.FontWeight == FontWeights.Bold)
-                {
-                    tb.FontWeight = FontWeights.Normal;
+                    if (tb.IsSelectionActive && tb.FontWeight != FontWeights.Bold)
+                    {
+                        tb.FontWeight = FontWeights.Bold;
+                    }
+                    else if (tb.IsSelectionActive && tb.FontWeight == FontWeights.Bold)
+                    {
+                        tb.FontWeight = FontWeights.Normal;
+                    }
                 }
             }
         }
@@ -157,14 +161,18 @@ namespace LatexProject.GUI.MVVM.View
         private void ItalisizeButton_Click(object sender, MouseButtonEventArgs e)
         {
             // SDM - Italisizes the selected text.
-            foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+            if (rows > 0 && columns > 0)
             {
-                if(tb.IsSelectionActive && tb.FontStyle != FontStyles.Italic)
+                foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
                 {
-                    tb.FontStyle = FontStyles.Italic;
-                } else if (tb.IsSelectionActive && tb.FontStyle == FontStyles.Italic)
-                {
-                    tb.FontStyle = FontStyles.Normal;
+                    if (tb.IsSelectionActive && tb.FontStyle != FontStyles.Italic)
+                    {
+                        tb.FontStyle = FontStyles.Italic;
+                    }
+                    else if (tb.IsSelectionActive && tb.FontStyle == FontStyles.Italic)
+                    {
+                        tb.FontStyle = FontStyles.Normal;
+                    }
                 }
             }
         }
@@ -215,10 +223,13 @@ namespace LatexProject.GUI.MVVM.View
         private void TableFormatClearButton_Click(object sender, MouseButtonEventArgs e)
         {
             // SDM - Clears all special formatting from the table.
-            foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+            if (rows > 0 && columns > 0)
             {
-                tb.FontWeight = FontWeights.Normal;
-                tb.FontStyle = FontStyles.Normal;
+                foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+                {
+                    tb.FontWeight = FontWeights.Normal;
+                    tb.FontStyle = FontStyles.Normal;
+                }
             }
         }
 
