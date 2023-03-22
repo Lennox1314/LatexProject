@@ -22,10 +22,10 @@
         </Button>
         <StackPanel x:Name="stkMenuDisplay" Visibility="Visible">
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnEditRows" Margin="50,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="25">
+                <Button x:Name="btnEditRows" Margin="50,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" ToolTip="Enter Rows">
                     <Image Source="/GUI/Images/rowsIcon.png" MouseLeftButtonDown="RowsButton_Click"/>
                 </Button>
-                <Button x:Name="btnEditColumns" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" >
+                <Button x:Name="btnEditColumns" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="25" ToolTip="Enter Columns">
                     <Image Source="/GUI/Images/colsIcon.png" MouseLeftButtonDown="ColumnsButton_Click"/>
                 </Button>
                 <Button x:Name="btnAddCaption" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="25">
