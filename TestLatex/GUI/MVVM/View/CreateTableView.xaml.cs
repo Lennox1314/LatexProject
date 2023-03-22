@@ -190,6 +190,20 @@ namespace LatexProject.GUI.MVVM.View
             }
         }
 
+        private void RowsButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            // SDM - Prompts the user using an input box to enter the number of rows.
+            // Known Error - When clicking cancel on the dialog box it displays the error message.
+            string answer = Microsoft.VisualBasic.Interaction.InputBox("How many rows should there be?", "Enter Rows", rows.ToString());
+            try
+            {
+                rows = Int32.Parse(answer);
+            } catch
+            {
+                MessageBox.Show("Invalid input. Please enter an integer.");
+            }
+        }
+
         private void btnClearScreen_Click(object sender, RoutedEventArgs e)
         { // KDN - clears the canvas of any current textboxes and any text inside the output box
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
