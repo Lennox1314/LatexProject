@@ -224,6 +224,7 @@ namespace LatexProject.GUI.MVVM.View
             LaTeXCodeTextBox.Text = "";
             rows = 0;
             columns = 0;
+            tableCaption = "";
         }
 
         private void btnCreateOutput_Click(object sender, RoutedEventArgs e)
