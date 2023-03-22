@@ -227,8 +227,9 @@ namespace LatexProject.GUI.MVVM.View
             }
         }
 
-        private void btnClearScreen_Click(object sender, RoutedEventArgs e)
-        { // KDN - clears the canvas of any current textboxes and any text inside the output box
+        private void ClearTableButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            // KDN - clears the canvas of any current textboxes and any text inside the output box
             canContainer.Children.OfType<TextBox>().ToList().ForEach(tb => canContainer.Children.Remove(tb));
             if (canGrid != null)
             {
@@ -236,7 +237,8 @@ namespace LatexProject.GUI.MVVM.View
                 canGrid.Children.OfType<TextBox>().ToList().ForEach(tb => canGrid.Children.Remove(tb));
             }
             LaTeXCodeTextBox.Text = "";
-
+            rows = 0;
+            columns = 0;
         }
 
         private void btnCreateOutput_Click(object sender, RoutedEventArgs e)
@@ -316,7 +318,7 @@ namespace LatexProject.GUI.MVVM.View
             }
             catch (NullReferenceException except)
             {
-                MessageBox.Show("Please generate the textboxes.");
+                MessageBox.Show("Ensure both columns and rows are greater than 0.");
             }
 
             latexCode.AppendLine("\\end{tabular}");
