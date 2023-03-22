@@ -202,6 +202,10 @@ namespace LatexProject.GUI.MVVM.View
             {
                 MessageBox.Show("Invalid input. Please enter an integer.");
             }
+            if(rows > 0 && columns > 0)
+            {
+                CreateGrid();
+            }
         }
 
         private void ColumnsButton_Click(object sender, MouseButtonEventArgs e)
@@ -216,6 +220,10 @@ namespace LatexProject.GUI.MVVM.View
             catch
             {
                 MessageBox.Show("Invalid input. Please enter an integer.");
+            }
+            if(rows > 0 && columns > 0)
+            {
+                CreateGrid();
             }
         }
 
@@ -323,9 +331,9 @@ namespace LatexProject.GUI.MVVM.View
         }
 
 
-
-        private void btnCreateGrid_Click(object sender, RoutedEventArgs e)
-        { // KDN - creates a grid of textboxes that after a certain size will become scrollable 
+        private void CreateGrid()
+        {
+            // KDN - creates a grid of textboxes that after a certain size will become scrollable 
 
             // set the dimensions of each cell
             double textBoxWidth = 40;
@@ -352,7 +360,7 @@ namespace LatexProject.GUI.MVVM.View
                         canGrid.UnregisterName(textBoxName);
                         canGrid.Children.Remove(canGrid.FindName(textBoxName) as TextBox);
                     }
-                    
+
                     textBox.Width = textBoxWidth;
                     textBox.Height = textBoxHeight;
                     textBox.Name = textBoxName;
@@ -376,7 +384,6 @@ namespace LatexProject.GUI.MVVM.View
             canContainer.Children.Clear();
             canContainer.Children.Add(scrollViewer);
         }
-
         
     }
 }
