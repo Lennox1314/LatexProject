@@ -115,10 +115,8 @@
         <Button x:Name="btncreateTextBoxes" Content="Create Boxes" HorizontalAlignment="Center" Margin="0,93,0,0" VerticalAlignment="Top" Click="btnCreateGrid_Click" RenderTransformOrigin="0.508,0.577" Grid.Column="1" Grid.Row="1"/>
         <Canvas Margin="290,10,30,10"
         Name="canContainer"/>
-        <TextBox x:Name="xCoord" HorizontalAlignment="Left" Margin="100,24,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="56" Height="18" Grid.Column="1" Grid.Row="1"/>
-        <TextBox x:Name="yCoord" HorizontalAlignment="Left" Margin="202,24,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="59" Grid.Column="1" Grid.Row="1"/>
         <TextBox x:Name="LaTeXCodeTextBox" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Latex Output" VerticalAlignment="Top"  Width="200" Margin="0,57,0,0"/>
-        <Button x:Name="btnClearScreen" Content="Clear" HorizontalAlignment="Left" Margin="167,65,0,0" VerticalAlignment="Top" Click="btnClearScreen_Click" RenderTransformOrigin="-0.18,1.097" Grid.Column="1" Grid.Row="1"/>
+        <Button x:Name="btnClearScreen" Content="Clear" HorizontalAlignment="Left" Margin="100,12,0,0" VerticalAlignment="Top" Click="btnClearScreen_Click" RenderTransformOrigin="-0.18,1.097" Grid.Row="1"/>
         <TextBox x:Name="txt_tableHeader" HorizontalAlignment="Left" Margin="6,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Collapsed"/>
         <Label x:Name="lbl_tableHeaderContent" Content="Enter Table Header" HorizontalAlignment="Left" Margin="6,89,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Collapsed" Width="151"/>
         <Label x:Name="lbl_tableCaption" Content="Enter Table Caption" HorizontalAlignment="Left" Margin="151,89,0,0" VerticalAlignment="Top" Foreground="White" Visibility="Collapsed"/>

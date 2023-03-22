@@ -268,40 +268,47 @@ namespace LatexProject.GUI.MVVM.View
             {
                 latexCode.AppendLine("\\multicolumn{" + columns.ToString() + "}{|c|}{" + txt_tableHeader.Text + "} \\\\ \n \\hline");
             }*/
-
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
+            try {
+                for (int i = 0; i < rows; i++)
                 {
-                    TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
-                    if (textBox == null)
+                    for (int j = 0; j < columns; j++)
                     {
-                        latexCode.Append(" & "); // need to put exception for null here ---------
-                    } else
-                    {
-                        latexCode.Append(textBox.Text + " & ");
-                    }
+                        TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
 
-                    if(textBox.FontWeight == FontWeights.Bold)
-                    {
-                        string oldString = latexCode.ToString();
-                        int index = oldString.IndexOf(textBox.Text);
-                        latexCode.Insert(index, "\\textbf{");
-                        int endIndex = textBox.Text.Length + latexCode.ToString().IndexOf(textBox.Text);
-                        latexCode.Insert(endIndex, "}");
-                    }
+                        if (textBox == null)
+                        {
+                            latexCode.Append(" & "); // need to put exception for null here ---------
+                        }
+                        else
+                        {
+                            latexCode.Append(textBox.Text + " & ");
+                        }
 
-                    if(textBox.FontStyle == FontStyles.Italic)
-                    {
-                        string oldString = latexCode.ToString();
-                        int index = oldString.IndexOf(textBox.Text);
-                        latexCode.Insert(index, "\\textit{");
-                        int endIndex = textBox.Text.Length + latexCode.ToString().IndexOf(textBox.Text);
-                        latexCode.Insert(endIndex, "}");
+                        if (textBox.FontWeight == FontWeights.Bold)
+                        {
+                            string oldString = latexCode.ToString();
+                            int index = oldString.IndexOf(textBox.Text);
+                            latexCode.Insert(index, "\\textbf{");
+                            int endIndex = textBox.Text.Length + latexCode.ToString().IndexOf(textBox.Text);
+                            latexCode.Insert(endIndex, "}");
+                        }
+
+                        if (textBox.FontStyle == FontStyles.Italic)
+                        {
+                            string oldString = latexCode.ToString();
+                            int index = oldString.IndexOf(textBox.Text);
+                            latexCode.Insert(index, "\\textit{");
+                            int endIndex = textBox.Text.Length + latexCode.ToString().IndexOf(textBox.Text);
+                            latexCode.Insert(endIndex, "}");
+                         }
                     }
+                    latexCode.Length -= 3;
+                    latexCode.AppendLine("\\\\ \\hline");
                 }
-                latexCode.Length -= 3;
-                latexCode.AppendLine("\\\\ \\hline");
+            }
+            catch (NullReferenceException except)
+            {
+                MessageBox.Show("Please generate the textboxes.");
             }
 
             latexCode.AppendLine("\\end{tabular}");
@@ -319,12 +326,6 @@ namespace LatexProject.GUI.MVVM.View
 
         private void btnCreateGrid_Click(object sender, RoutedEventArgs e)
         { // KDN - creates a grid of textboxes that after a certain size will become scrollable 
-            // get the dimensions of the grid
-            if (xCoord.Text != "" && yCoord.Text != "")
-            {
-                rows = int.Parse(xCoord.Text);
-                columns = int.Parse(yCoord.Text);
-            }
 
             // set the dimensions of each cell
             double textBoxWidth = 40;
