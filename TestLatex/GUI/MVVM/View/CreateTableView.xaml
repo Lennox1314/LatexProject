@@ -74,7 +74,7 @@
                     <Image Source="/GUI/Images/border.png"/>
                 </Button>
                 <Button x:Name="btnClearFormatting" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
-                    <Image Source="/GUI/Images/clear-formatting.png"/>
+                    <Image Source="/GUI/Images/clear-formatting.png" MouseLeftButtonDown="TableFormatClearButton_Click"/>
                 </Button>
                 <Button x:Name="btnClearTable" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Clear grid and table contents.">
                     <Image Source="/GUI/Images/clear_table.png" MouseLeftButtonDown="ClearTableButton_Click"/>

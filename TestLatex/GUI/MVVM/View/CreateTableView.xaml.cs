@@ -212,6 +212,16 @@ namespace LatexProject.GUI.MVVM.View
             tableCaption = Microsoft.VisualBasic.Interaction.InputBox("Enter the caption for the table:", "Table Caption", ""); 
         }
 
+        private void TableFormatClearButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            // SDM - Clears all special formatting from the table.
+            foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+            {
+                tb.FontWeight = FontWeights.Normal;
+                tb.FontStyle = FontStyles.Normal;
+            }
+        }
+
         private void ClearTableButton_Click(object sender, MouseButtonEventArgs e)
         {
             // KDN - clears the canvas of any current textboxes and any text inside the output box
