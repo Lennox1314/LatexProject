@@ -40,7 +40,6 @@
 
   <ItemGroup>
     <Folder Include="GUI\Fonts\" />
-    <Folder Include="GUI\MVVM\Model\" />
   </ItemGroup>
 
   <ItemGroup>

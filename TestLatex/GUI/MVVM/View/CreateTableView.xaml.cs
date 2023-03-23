@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using LatexProject.GUI.MVVM.Model;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -199,7 +200,7 @@ namespace LatexProject.GUI.MVVM.View
         {
             // SDM - Prompts the user using an input box to enter the number of columns.
             // Known Error - When clicking cancel on the dialog box it displays the error message.
-            string answer = Microsoft.VisualBasic.Interaction.InputBox("How many rows should there be?", "Enter Rows", columns.ToString());
+            string answer = Microsoft.VisualBasic.Interaction.InputBox("How many columns should there be?", "Enter Rows", columns.ToString());
             try
             {
                 columns = Int32.Parse(answer);
@@ -331,7 +332,28 @@ namespace LatexProject.GUI.MVVM.View
             LaTeXCodeTextBox.Text = latexCode.ToString();
         }
 
+        private void CellColor_Click(object sender, RoutedEventArgs e)
+        {
+            // Create a new instance of the color wheel window
+            var colorWheelWindow = new ColorWheelWindow();
 
+            // Subscribe to the ColorSelected event
+            colorWheelWindow.ColorSelected += ColorWheelWindow_ColorSelected;
+
+            // Show the color wheel window as a dialog
+            colorWheelWindow.ShowDialog();
+
+
+        }
+        private void ColorWheelWindow_ColorSelected(object sender, ColorSelectedEventArgs e)
+        {
+            // Get the selected color from the event args
+            var selectedColor = e.SelectedColor;
+
+            // Do something with the selected color
+            // For example, set the background color of a UI element
+           
+        }
         private void CreateGrid()
         {
             // KDN - creates a grid of textboxes that after a certain size will become scrollable 

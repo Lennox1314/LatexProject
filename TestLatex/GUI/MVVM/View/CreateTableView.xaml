@@ -37,8 +37,8 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnBackgroundColor" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,5,0,0" Width="25">
-                    <Image Source="/GUI/Images/fill-color.png"/>
+                <Button x:Name="btnBackgroundColor" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,5,0,0" Width="25" ToolTip="Cell Color">
+                    <Image Source="/GUI/Images/fill-color.png" MouseLeftButtonDown="CellColor_Click"/>
                 </Button>
                 <Button x:Name="btnBold" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Bold">
                     <Image Source="/GUI/Images/bold.png" MouseLeftButtonDown="BoldButton_Click"/>
