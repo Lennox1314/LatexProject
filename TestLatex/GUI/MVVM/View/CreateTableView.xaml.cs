@@ -37,6 +37,8 @@ namespace LatexProject.GUI.MVVM.View
         private string tableCaption = "";
         public Canvas canGrid;
         public ScrollViewer scrollViewer;
+        private ColorWheelWindow myColorWheel;
+        public Brush selectedColor;
 
 
         private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
@@ -249,6 +251,16 @@ namespace LatexProject.GUI.MVVM.View
             tableCaption = "";
         }
 
+        private string GetHexColor(Brush brush)
+        {
+            SolidColorBrush solidBrush = brush as SolidColorBrush;
+            if (solidBrush != null)
+            {
+                return solidBrush.Color.ToString().Substring(3, 6);
+            }
+            return string.Empty;
+        }
+
         private void btnCreateOutput_Click(object sender, RoutedEventArgs e)
             /* 2/7/23
              * Problems: 
@@ -261,6 +273,45 @@ namespace LatexProject.GUI.MVVM.View
             // {
             //     tableCaption = true;
             // }
+            List<string> colorList = new List<string>();
+            Dictionary<string,string> colorPairs = new Dictionary<string,string>();
+
+            latexCode.Append("\\usepackage[table]{xcolor}\n");
+            try
+            {
+                for (int i = 0; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
+
+                        if (textBox == null)
+                        {
+                            latexCode.Append(" & "); // need to put exception for null here ---------
+                        }
+                        else
+                        {
+                            string cellColor = GetHexColor(textBox.Background);
+                            string colorName = "color" + i + "_" + j;
+                            if (!string.IsNullOrEmpty(cellColor))
+                            {
+                                
+                                if(!colorPairs.ContainsValue(cellColor))
+                                {
+                                    latexCode.Append("\\definecolor{color" + i + "_" + j + "}{HTML}{" + cellColor + "} \n");
+                                    colorPairs.Add(colorName, cellColor);
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            catch (NullReferenceException except)
+            {
+                MessageBox.Show("Ensure both columns and rows are greater than 0.");
+            }
+
             latexCode.AppendLine("\\begin{table}[h]");
 
             // Starts the table centered. - SDM
@@ -292,6 +343,12 @@ namespace LatexProject.GUI.MVVM.View
                         }
                         else
                         {
+                            string cellColor = GetHexColor(textBox.Background);
+                            string colorName = colorPairs.FirstOrDefault(x => x.Value == cellColor).Key;
+                            if (!string.IsNullOrEmpty(cellColor))
+                            {
+                                latexCode.Append("\\cellcolor{" + colorName + "} ");
+                            }
                             latexCode.Append(textBox.Text + " & ");
                         }
 
@@ -334,24 +391,23 @@ namespace LatexProject.GUI.MVVM.View
 
         private void CellColor_Click(object sender, RoutedEventArgs e)
         {
-            // Create a new instance of the color wheel window
-            var colorWheelWindow = new ColorWheelWindow();
-
-            // Subscribe to the ColorSelected event
-            colorWheelWindow.ColorSelected += ColorWheelWindow_ColorSelected;
-
+            myColorWheel = new ColorWheelWindow(this);
             // Show the color wheel window as a dialog
-            colorWheelWindow.ShowDialog();
-
+            myColorWheel.ShowDialog();
 
         }
-        private void ColorWheelWindow_ColorSelected(object sender, ColorSelectedEventArgs e)
+        private void PaintTextbox_Click(object sender, MouseButtonEventArgs e)
         {
-            // Get the selected color from the event args
-            var selectedColor = e.SelectedColor;
+            Brush brushcolor = myColorWheel.mybrush;
+            if (brushcolor != null)
+            {
+                TextBox textbox = sender as TextBox;
 
-            // Do something with the selected color
-            // For example, set the background color of a UI element
+                if (textbox != null)
+                {
+                    textbox.Background = brushcolor;
+                }
+            }
            
         }
         private void CreateGrid()
@@ -387,6 +443,7 @@ namespace LatexProject.GUI.MVVM.View
                     textBox.Width = textBoxWidth;
                     textBox.Height = textBoxHeight;
                     textBox.Name = textBoxName;
+                    textBox.PreviewMouseLeftButtonUp += PaintTextbox_Click;
                     canGrid.Children.Add(textBox);
                     Canvas.SetLeft(textBox, j * textBoxWidth);
                     Canvas.SetTop(textBox, i * textBoxHeight);

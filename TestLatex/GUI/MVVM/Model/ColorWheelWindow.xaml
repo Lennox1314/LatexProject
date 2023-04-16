@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="ColorWheelWindow" Height="350" Width="400">
     
+    
     <Grid>
         <Label Content="Please select the color you want then press ok." Height="30" Width="260" VerticalAlignment="Top" Margin="0,30,0,0"/>
         <Ellipse Width="180" Height="180" Stroke="Black" StrokeThickness="1" MouseLeftButtonDown="Ellipse_MouseLeftButtonDown">
@@ -25,12 +26,12 @@
             </Ellipse.Fill>
             
         </Ellipse>
-        <Ellipse Width="80" Height="80" MouseLeftButtonDown="Ellipse_MouseLeftButtonDown">
+        <Ellipse Width="80" Height="80" MouseLeftButtonDown="Ellipse_MouseLeftButtonDownBlackandWhite">
             <Ellipse.Fill>
                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                     <GradientStopCollection>
-                        <GradientStop Offset="0.3" Color="White"/>
-                        <GradientStop Offset=".7" Color="Black"/>
+                        <GradientStop Offset="0.3" Color="Black"/>
+                        <GradientStop Offset=".7" Color="White"/>
                     </GradientStopCollection>
                 </LinearGradientBrush>
             </Ellipse.Fill>

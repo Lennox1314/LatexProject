@@ -21,10 +21,12 @@ namespace LatexProject.GUI.MVVM.Model
     public partial class ColorWheelWindow : Window
     {
         public event EventHandler<ColorSelectedEventArgs> ColorSelected;
-        public ColorWheelWindow()
+        public Brush mybrush;
+        private CreateTableView owner;
+        public ColorWheelWindow(CreateTableView owner)
         {
             InitializeComponent();
-           // ColorCurrent.Background = "Blue";
+            this.owner = owner;
         }
 
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(
@@ -44,11 +46,10 @@ namespace LatexProject.GUI.MVVM.Model
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            // Get the selected color from the color wheel
-            //Color selectedColor = ColorFromHsv(GetHueFromThumbPosition());
+            mybrush = PreviewTextBlock.Background;
 
-            // Raise the ColorSelected event
-            //ColorSelected?.Invoke(this, new ColorSelectedEventArgs(selectedColor));
+            ((CreateTableView)owner).selectedColor = mybrush;
+
 
             // Close the color wheel window
             this.Close();
@@ -105,6 +106,25 @@ namespace LatexProject.GUI.MVVM.Model
             // Update the SelectedColor property of the view model
             // var viewModel = (ColorWheelWindow)DataContext;
             // viewModel.SelectedColor = new SolidColorBrush(selectedColor).Color;
+        }
+        private void Ellipse_MouseLeftButtonDownBlackandWhite(object sender, MouseButtonEventArgs e)
+        {
+            var ellipse = (Ellipse)sender;
+            var position = e.GetPosition(ellipse);
+
+            // Calculate the hue and saturation values based on the mouse position
+            var value = position.X / ellipse.ActualWidth;
+            var saturation = position.Y / ellipse.ActualHeight;
+
+
+            
+
+
+            // Create a new color with the calculated hue, saturation, and maximum brightness values
+            var selectedColor = ColorFromHsv(0, 0, value);
+
+            SolidColorBrush myBrush = new SolidColorBrush(selectedColor);
+            PreviewTextBlock.Background = myBrush;
         }
 
     }
