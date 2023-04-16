@@ -273,7 +273,6 @@ namespace LatexProject.GUI.MVVM.View
             // {
             //     tableCaption = true;
             // }
-            List<string> colorList = new List<string>();
             Dictionary<string,string> colorPairs = new Dictionary<string,string>();
 
             latexCode.Append("\\usepackage[table]{xcolor}\n");
