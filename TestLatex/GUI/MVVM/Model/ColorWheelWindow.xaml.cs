@@ -127,6 +127,10 @@ namespace LatexProject.GUI.MVVM.Model
             PreviewTextBlock.Background = myBrush;
         }
 
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 
     public class ColorSelectedEventArgs : EventArgs

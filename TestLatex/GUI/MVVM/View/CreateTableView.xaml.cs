@@ -39,7 +39,9 @@ namespace LatexProject.GUI.MVVM.View
         public ScrollViewer scrollViewer;
         private ColorWheelWindow myColorWheel;
         public Brush selectedColor;
-
+        public bool paintCell = false;
+        public bool changeTextColor = false;
+        Dictionary<string, string> colorPairs = new Dictionary<string, string>();
 
         private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -273,8 +275,9 @@ namespace LatexProject.GUI.MVVM.View
             // {
             //     tableCaption = true;
             // }
-            Dictionary<string,string> colorPairs = new Dictionary<string,string>();
-
+            
+            addTextColors(rows, columns);
+            addCellColors(rows, columns);
             latexCode.Append("\\usepackage[table]{xcolor}\n");
             try
             {
@@ -291,16 +294,24 @@ namespace LatexProject.GUI.MVVM.View
                         else
                         {
                             string cellColor = GetHexColor(textBox.Background);
+                            string textColor =  GetHexColor(textBox.Foreground);
                             string colorName = "color" + i + "_" + j;
+                            string textColorName = "textcolor" + i + "_" + j;
                             if (!string.IsNullOrEmpty(cellColor))
                             {
                                 
-                                if(!colorPairs.ContainsValue(cellColor))
+                                if(colorPairs.ContainsValue(cellColor) && cellColor != "FFFFFF")
                                 {
-                                    latexCode.Append("\\definecolor{color" + i + "_" + j + "}{HTML}{" + cellColor + "} \n");
-                                    colorPairs.Add(colorName, cellColor);
+                                    latexCode.Append("\\definecolor{cellColor" + i + "_" + j + "}{HTML}{" + cellColor + "} \n");
+
                                 }
-                                
+                                if (colorPairs.ContainsValue(textColor) && textColor != "000000")
+                                {
+                                    latexCode.Append("\\definecolor{textColor" + i + "_" + j + "}{HTML}{" + textColor + "} \n");
+
+                                }
+
+
                             }
                         }
                     }
@@ -343,12 +354,20 @@ namespace LatexProject.GUI.MVVM.View
                         else
                         {
                             string cellColor = GetHexColor(textBox.Background);
+                            string textColor = GetHexColor(textBox.Foreground);
                             string colorName = colorPairs.FirstOrDefault(x => x.Value == cellColor).Key;
-                            if (!string.IsNullOrEmpty(cellColor))
+                            string textColorName = colorPairs.FirstOrDefault(x => x.Value == textColor).Key;
+                            if (cellColor != null && cellColor != "FFFFFF")
                             {
-                                latexCode.Append("\\cellcolor{" + colorName + "} ");
+                                latexCode.Append("\\cellcolor{" + colorName + "} & ");
                             }
-                            latexCode.Append(textBox.Text + " & ");
+                            else if(textColor != null && textColor != "000000") 
+                            {
+                                latexCode.Append("{\\color{" + textColorName + "} " + textBox.Text + "} & ");
+                            }
+                            else {
+                                latexCode.Append(textBox.Text + " & ");
+                            }
                         }
 
                         if (textBox.FontWeight == FontWeights.Bold)
@@ -389,26 +408,93 @@ namespace LatexProject.GUI.MVVM.View
         }
 
         private void CellColor_Click(object sender, RoutedEventArgs e)
-        {
+        { // kdn -  opens color wheel and sets paintcell to true/changetextcolor to false so that clicking on cells will change their color but not the text
+            changeTextColor = false;
+            paintCell = true;
             myColorWheel = new ColorWheelWindow(this);
             // Show the color wheel window as a dialog
             myColorWheel.ShowDialog();
 
         }
         private void PaintTextbox_Click(object sender, MouseButtonEventArgs e)
-        {
-            Brush brushcolor = myColorWheel.mybrush;
-            if (brushcolor != null)
-            {
-                TextBox textbox = sender as TextBox;
+        { // kdn - event that takes currently selected color and changes the textboxes color to that color when clicked
 
-                if (textbox != null)
+            if (myColorWheel != null)
+            {
+                Brush brushcolor = myColorWheel.mybrush;
+                if (brushcolor != null && paintCell == true)
                 {
-                    textbox.Background = brushcolor;
+                    TextBox textbox = sender as TextBox;
+
+                    if (textbox != null)
+                    {
+                        textbox.Background = brushcolor;
+                    }
                 }
             }
-           
+               
         }
+        private void TextColor_Click(object sender, RoutedEventArgs e)
+        { // kdn - opens color wheel and makes sure paintcell is false/changetextcolor is true so the cells dont change color but the text does
+            changeTextColor = true;
+            paintCell = false;
+            myColorWheel = new ColorWheelWindow(this);
+            // Show the color wheel window as a dialog
+            myColorWheel.ShowDialog();
+
+        }
+
+        private void ChangeTextColor_Click(object sender, TextChangedEventArgs e)
+        {
+            if (myColorWheel != null)
+            {
+                Brush brushcolor = myColorWheel.mybrush;
+                if (brushcolor != null && changeTextColor == true)
+                {
+                    TextBox textbox = sender as TextBox;
+
+                    if (textbox != null)
+                    {
+                        textbox.Foreground = brushcolor;
+                    }
+                }
+            }
+
+        }
+
+        public void addTextColors(int rows, int columns)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
+                    string textColor = GetHexColor(textBox.Foreground);
+                    string textColorName = "textColor" + i + "_" + j;
+                    if (!colorPairs.ContainsKey(textColor) && !colorPairs.ContainsKey(textColorName) && textColor != "FFFFFF")
+                    {
+                        colorPairs.Add(textColorName, textColor);
+                    }
+                }
+            }
+        }
+        public void addCellColors(int rows, int columns)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
+                    string cellColor = GetHexColor(textBox.Background);
+                    string cellColorName = "cellColor" + i + "_" + j;
+                    if (!colorPairs.ContainsKey(cellColor) && !colorPairs.ContainsKey(cellColorName) && cellColor != "FFFFFF")
+                    {
+                        colorPairs.Add(cellColorName, cellColor);
+                    }
+                }
+            }
+        }
+
         private void CreateGrid()
         {
             // KDN - creates a grid of textboxes that after a certain size will become scrollable 
@@ -443,6 +529,7 @@ namespace LatexProject.GUI.MVVM.View
                     textBox.Height = textBoxHeight;
                     textBox.Name = textBoxName;
                     textBox.PreviewMouseLeftButtonUp += PaintTextbox_Click;
+                    textBox.TextChanged += ChangeTextColor_Click;
                     canGrid.Children.Add(textBox);
                     Canvas.SetLeft(textBox, j * textBoxWidth);
                     Canvas.SetTop(textBox, i * textBoxHeight);

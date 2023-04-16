@@ -57,7 +57,7 @@
                     <Image Source="/GUI/Images/font-size.png"/>
                 </Button>
                 <Button x:Name="btnFontColor" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
-                    <Image Source="/GUI/Images/text-color.png"/>
+                    <Image Source="/GUI/Images/text-color.png" MouseLeftButtonDown="TextColor_Click"/>
                 </Button>
                 <Button x:Name="btnSplitCell" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
                     <Image Source="/GUI/Images/split-cells.png"/>

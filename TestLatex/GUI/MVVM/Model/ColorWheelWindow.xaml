@@ -52,7 +52,7 @@
 
         <StackPanel Orientation="Horizontal">
             <Button x:Name="btnGetColor" Content="Ok" Width="100" Height="40" VerticalAlignment="Bottom" Margin="80,0,0,20" Click="OKButton_Click"/>
-            <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="40" VerticalAlignment="Bottom" Margin="50,0,0,20"/>
+            <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="40" VerticalAlignment="Bottom" Margin="50,0,0,20" Click="btnCancel_Click"/>
         </StackPanel>
     </Grid>
 </Window>
