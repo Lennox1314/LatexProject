@@ -359,9 +359,9 @@ namespace LatexProject.GUI.MVVM.View
                             string textColorName = colorPairs.FirstOrDefault(x => x.Value == textColor).Key;
                             if (cellColor != null && cellColor != "FFFFFF")
                             {
-                                latexCode.Append("\\cellcolor{" + colorName + "} & ");
+                                latexCode.Append("\\cellcolor{" + colorName + "} ");
                             }
-                            else if(textColor != null && textColor != "000000") 
+                            if(textColor != null && textColor != "000000") 
                             {
                                 latexCode.Append("{\\color{" + textColorName + "} " + textBox.Text + "} & ");
                             }
