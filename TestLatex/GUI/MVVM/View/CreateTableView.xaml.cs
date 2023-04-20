@@ -281,50 +281,54 @@ namespace LatexProject.GUI.MVVM.View
             
             addTextColors(rows, columns);
             addCellColors(rows, columns);
-            latexCode.Append("\\usepackage[table]{xcolor}\n");
-            try
+            if (colorPairs.Count > 0)
             {
-                for (int i = 0; i < rows; i++)
+                latexCode.Append("%***\tADD THE FOLLOWING TO THE TOP OF YOUR DOCUMENT\t***\n");
+                latexCode.Append("\\usepackage[table]{xcolor}\n");
+                try
                 {
-                    for (int j = 0; j < columns; j++)
+                    for (int i = 0; i < rows; i++)
                     {
-                        TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
+                        for (int j = 0; j < columns; j++)
+                        {
+                            TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
 
-                        if (textBox == null)
-                        {
-                            latexCode.Append(" & "); // need to put exception for null here ---------
-                        }
-                        else
-                        {
-                            string cellColor = GetHexColor(textBox.Background);
-                            string textColor =  GetHexColor(textBox.Foreground);
-                            string colorName = "color" + i + "_" + j;
-                            string textColorName = "textcolor" + i + "_" + j;
-                            if (!string.IsNullOrEmpty(cellColor))
+                            if (textBox == null)
                             {
-                                
-                                if(colorPairs.ContainsValue(cellColor) && cellColor != "FFFFFF")
+                                latexCode.Append(" & "); // need to put exception for null here ---------
+                            }
+                            else
+                            {
+                                string cellColor = GetHexColor(textBox.Background);
+                                string textColor = GetHexColor(textBox.Foreground);
+                                string colorName = "color" + i + "_" + j;
+                                string textColorName = "textcolor" + i + "_" + j;
+                                if (!string.IsNullOrEmpty(cellColor))
                                 {
-                                    latexCode.Append("\\definecolor{cellColor" + i + "_" + j + "}{HTML}{" + cellColor + "} \n");
+
+                                    if (colorPairs.ContainsValue(cellColor) && cellColor != "FFFFFF")
+                                    {
+                                        latexCode.Append("\\definecolor{cellColor" + i + "_" + j + "}{HTML}{" + cellColor + "} \n");
+
+                                    }
+                                    if (colorPairs.ContainsValue(textColor) && textColor != "000000")
+                                    {
+                                        latexCode.Append("\\definecolor{textColor" + i + "_" + j + "}{HTML}{" + textColor + "} \n");
+
+                                    }
+
 
                                 }
-                                if (colorPairs.ContainsValue(textColor) && textColor != "000000")
-                                {
-                                    latexCode.Append("\\definecolor{textColor" + i + "_" + j + "}{HTML}{" + textColor + "} \n");
-
-                                }
-
-
                             }
                         }
                     }
                 }
+                catch (NullReferenceException except)
+                {
+                    MessageBox.Show("Ensure both columns and rows are greater than 0.");
+                }
+                latexCode.Append("%***\tEND\t***\n\n");
             }
-            catch (NullReferenceException except)
-            {
-                MessageBox.Show("Ensure both columns and rows are greater than 0.");
-            }
-
             latexCode.AppendLine("\\begin{table}[h]");
 
             // Starts the table centered. - SDM
@@ -463,6 +467,51 @@ namespace LatexProject.GUI.MVVM.View
                 }
             }
 
+        }
+
+        private void LeftAlignButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            // SDM - Aligns the text in the textbox to the left
+            if (rows > 0 && columns > 0)
+            {
+                foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+                {
+                    if (tb.IsSelectionActive)
+                    {
+                        tb.TextAlignment = TextAlignment.Left;
+                    }
+                }
+            }
+        }
+
+        private void CenterAlignTextButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            // SDM - Aligned the text in the textbox to the center
+            if (rows > 0 && columns > 0)
+            {
+                foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+                {
+                    if (tb.IsSelectionActive)
+                    {
+                        tb.TextAlignment = TextAlignment.Center;
+                    }
+                }
+            }
+        }
+
+        private void RightAlignButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            // SDM - Aligned the text in the textbox to the right
+            if (rows > 0 && columns > 0)
+            {
+                foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+                {
+                    if (tb.IsSelectionActive)
+                    {
+                        tb.TextAlignment = TextAlignment.Right;
+                    }
+                }
+            }
         }
 
         public void addTextColors(int rows, int columns)
