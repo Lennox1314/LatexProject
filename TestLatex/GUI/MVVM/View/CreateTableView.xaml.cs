@@ -474,7 +474,7 @@ namespace LatexProject.GUI.MVVM.View
                     TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
                     string textColor = GetHexColor(textBox.Foreground);
                     string textColorName = "textColor" + i + "_" + j;
-                    if (!colorPairs.ContainsKey(textColor) && !colorPairs.ContainsKey(textColorName) && textColor != "FFFFFF")
+                    if (!colorPairs.ContainsKey(textColor) && !colorPairs.ContainsKey(textColorName) && textColor != "000000")
                     {
                         colorPairs.Add(textColorName, textColor);
                     }
