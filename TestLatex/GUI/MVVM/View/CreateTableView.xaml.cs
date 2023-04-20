@@ -234,7 +234,10 @@ namespace LatexProject.GUI.MVVM.View
                 {
                     tb.FontWeight = FontWeights.Normal;
                     tb.FontStyle = FontStyles.Normal;
+                    tb.Background = Brushes.White;
+                    tb.Foreground = Brushes.Black;
                 }
+                colorPairs.Clear();
             }
         }
 
