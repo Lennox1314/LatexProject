@@ -236,6 +236,7 @@ namespace LatexProject.GUI.MVVM.View
                     tb.FontStyle = FontStyles.Normal;
                     tb.Background = Brushes.White;
                     tb.Foreground = Brushes.Black;
+                    tb.TextAlignment = TextAlignment.Left;
                 }
                 colorPairs.Clear();
             }
@@ -337,16 +338,11 @@ namespace LatexProject.GUI.MVVM.View
             latexCode.AppendLine("\\begin{tabular}{|");
             for (int j = 0; j < columns; j++)
             {
-                latexCode.Append("c|");
+                latexCode.Append("l|");
             }
             latexCode.AppendLine("}");
             latexCode.AppendLine("\\hline");
 
-            /* Adds the header row. - SDM
-            if (tableHeader != "")
-            {
-                latexCode.AppendLine("\\multicolumn{" + columns.ToString() + "}{|c|}{" + txt_tableHeader.Text + "} \\\\ \n \\hline");
-            }*/
             try {
                 for (int i = 0; i < rows; i++)
                 {
@@ -364,16 +360,24 @@ namespace LatexProject.GUI.MVVM.View
                             string textColor = GetHexColor(textBox.Foreground);
                             string colorName = colorPairs.FirstOrDefault(x => x.Value == cellColor).Key;
                             string textColorName = colorPairs.FirstOrDefault(x => x.Value == textColor).Key;
+                            if(textBox.TextAlignment == TextAlignment.Center)
+                            {
+                                latexCode.Append("\\multicolumn{1}{|c|}");
+                            } else if(textBox.TextAlignment == TextAlignment.Right)
+                            {
+                                latexCode.Append("\\multicolumn{1}{|r|}");
+                            }
+                            latexCode.Append("{");
                             if (cellColor != null && cellColor != "FFFFFF")
                             {
                                 latexCode.Append("\\cellcolor{" + colorName + "} ");
                             }
                             if(textColor != null && textColor != "000000") 
                             {
-                                latexCode.Append("{\\color{" + textColorName + "} " + textBox.Text + "} & ");
+                                latexCode.Append("\\color{" + textColorName + "} " + textBox.Text + "} & ");
                             }
                             else {
-                                latexCode.Append(textBox.Text + " & ");
+                                latexCode.Append(textBox.Text + "} & ");
                             }
                         }
 
