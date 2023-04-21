@@ -1,0 +1,16 @@
+name: Generate SBOM
+on:
+  push:
+    branches: [master]
+jobs:
+  sbom:
+    runs-on: ubuntu-latest # or windows-latest for .NET Framework
+  steps:
+  - name: Checkout code
+  uses: actions/checkout@v2
+  - name: Setup .NET
+  uses: actions/setup-dotnet@v1
+  with:
+    dotnet-version: '3.1.x'
+- name: Generate SBOM
+  run: dotnet list package --include-transitive --license > sbom.txt
