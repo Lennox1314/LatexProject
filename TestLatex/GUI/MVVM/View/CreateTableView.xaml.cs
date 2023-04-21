@@ -237,6 +237,7 @@ namespace LatexProject.GUI.MVVM.View
                     tb.Background = Brushes.White;
                     tb.Foreground = Brushes.Black;
                     tb.TextAlignment = TextAlignment.Left;
+                    tb.FontSize= 12;
                 }
                 colorPairs.Clear();
             }
@@ -360,6 +361,35 @@ namespace LatexProject.GUI.MVVM.View
                             string textColor = GetHexColor(textBox.Foreground);
                             string colorName = colorPairs.FirstOrDefault(x => x.Value == cellColor).Key;
                             string textColorName = colorPairs.FirstOrDefault(x => x.Value == textColor).Key;
+                            string fontSizeName = "\\";
+                            if(textBox.FontSize == 6)
+                            {
+                                fontSizeName += "tiny";
+                            } else if(textBox.FontSize == 7)
+                            {
+                                fontSizeName += "scriptsize";
+                            } else if(textBox.FontSize == 8)
+                            {
+                                fontSizeName += "footnotesize";
+                            } else if(textBox.FontSize == 10)
+                            {
+                                fontSizeName += "small";
+                            } else if(textBox.FontSize == 14)
+                            {
+                                fontSizeName += "large";
+                            } else if(textBox.FontSize == 16)
+                            {
+                                fontSizeName += "Large";
+                            } else if(textBox.FontSize == 18)
+                            {
+                                fontSizeName += "LARGE";
+                            } else if(textBox.FontSize == 20)
+                            {
+                                fontSizeName += "huge";
+                            } else if(textBox.FontSize == 22)
+                            {
+                                fontSizeName += "Huge";
+                            }
                             if(textBox.TextAlignment == TextAlignment.Center)
                             {
                                 latexCode.Append("\\multicolumn{1}{|c|}");
@@ -374,10 +404,10 @@ namespace LatexProject.GUI.MVVM.View
                             }
                             if(textColor != null && textColor != "000000") 
                             {
-                                latexCode.Append("\\color{" + textColorName + "} " + textBox.Text + "} & ");
+                                latexCode.Append("\\color{" + textColorName + "} " + fontSizeName + " " + textBox.Text + "} & ");
                             }
                             else {
-                                latexCode.Append(textBox.Text + "} & ");
+                                latexCode.Append(fontSizeName + " " + textBox.Text + "} & ");
                             }
                         }
 
@@ -513,6 +543,21 @@ namespace LatexProject.GUI.MVVM.View
                     if (tb.IsSelectionActive)
                     {
                         tb.TextAlignment = TextAlignment.Right;
+                    }
+                }
+            }
+        }
+
+        private void FontSizeButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            if(rows > 0 && columns > 0)
+            {
+                foreach(TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+                {
+                    if(tb.IsSelectionActive)
+                    {
+                        ListBoxDialog listBox = new ListBoxDialog(tb);
+                        listBox.Show();
                     }
                 }
             }

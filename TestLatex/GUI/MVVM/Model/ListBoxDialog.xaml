@@ -1,0 +1,34 @@
+﻿<Window x:Class="LatexProject.GUI.MVVM.Model.ListBoxDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LatexProject.GUI.MVVM.Model"
+        mc:Ignorable="d"
+        Title="ListBoxDialog" Height="300" Width="350">
+    <DockPanel Margin="10">
+        <StackPanel DockPanel.Dock="Right" Margin="10, 0">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="0, 0, 0, 5"/>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock FontWeight="Bold" Margin="0, 0, 0, 10">Confirmation</TextBlock>
+            <Button Name="btnOkay" Click="btnOkay_Click">Ok</Button>
+            <Button Name="btnCancel" Click="btnCancel_Click">Cancel</Button>
+        </StackPanel>
+        <ListBox Name="fontsizes">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0.2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Title}" FontSize="{Binding Size}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </DockPanel>
+</Window>
