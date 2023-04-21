@@ -20,7 +20,6 @@ jobs:
         run: dotnet test --configuration Release --no-build
   sbom:
     runs-on: ubuntu-latest
-    needs: build-and-test
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -30,11 +29,21 @@ jobs:
       with:
         dotnet-version: '3.1.x'
 
-    - name: Generate SBOM
-      run: dotnet list package --include-transitive --license > sbom.txt
+    - name: List packages
+      run: dotnet list package --include-source --include-transitive > packages.txt
+
+    - name: Create SBOM
+      run: |
+        echo "name,version,source_url,license" > sbom.csv
+        tail -n +3 packages.txt | while read line; do
+          name=$(echo $line | awk '{print $1}')
+          version=$(echo $line | awk '{print $2}')
+          source_url=$(echo $line | awk '{print $NF}')
+          echo "$name,$version,$source_url,UNLICENSED" >> sbom.csv
+        done
 
     - name: Upload SBOM
       uses: actions/upload-artifact@v2
       with:
         name: sbom
-        path: sbom.txt
+        path: sbom.csv
