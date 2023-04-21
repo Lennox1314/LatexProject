@@ -1,0 +1,10 @@
+
+The following sources were used:
+   https://api.nuget.org/v3/index.json
+
+The given project `LatexProject` has no vulnerable packages given the current sources.
+There are no Project to Project references in project LatexProject.csproj.
+Project 'LatexProject' has the following package references
+   [net6.0-windows7.0]: No packages were found for this framework.
+
+
