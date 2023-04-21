@@ -30,7 +30,7 @@ jobs:
         dotnet-version: '3.1.x'
 
     - name: List packages
-      run: dotnet list package --include-source --include-transitive > packages.txt
+      run: dotnet list package > packages.txt
 
     - name: Create SBOM
       run: |
@@ -38,7 +38,7 @@ jobs:
         tail -n +3 packages.txt | while read line; do
           name=$(echo $line | awk '{print $1}')
           version=$(echo $line | awk '{print $2}')
-          source_url=$(echo $line | awk '{print $NF}')
+          source_url=""
           echo "$name,$version,$source_url,UNLICENSED" >> sbom.csv
         done
 
