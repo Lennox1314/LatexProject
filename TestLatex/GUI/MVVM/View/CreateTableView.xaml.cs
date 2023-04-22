@@ -33,7 +33,6 @@ namespace LatexProject.GUI.MVVM.View
         public int left, right, top, bottom = 0;
         private int rows;
         private int columns;
-        //private string tableHeader = "";
         private string tableCaption = "";
         public Canvas canGrid;
         public ScrollViewer scrollViewer;
@@ -42,7 +41,7 @@ namespace LatexProject.GUI.MVVM.View
         public bool paintCell = false;
         public bool changeTextColor = false;
         Dictionary<string, string> colorPairs = new Dictionary<string, string>();
-
+        
         private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
         {
             if(stkMenuDisplay.Visibility == Visibility.Collapsed)
@@ -411,6 +410,15 @@ namespace LatexProject.GUI.MVVM.View
                             }
                         }
 
+                        if(textBox.TextDecorations == TextDecorations.Underline)
+                        {
+                            string oldString = latexCode.ToString();
+                            int index = oldString.IndexOf(textBox.Text);
+                            latexCode.Insert(index, "\\underline{");
+                            int endIndex = textBox.Text.Length + latexCode.ToString().IndexOf(textBox.Text);
+                            latexCode.Insert(endIndex, "}");
+                        }
+
                         if (textBox.FontWeight == FontWeights.Bold)
                         {
                             string oldString = latexCode.ToString();
@@ -558,6 +566,23 @@ namespace LatexProject.GUI.MVVM.View
                     {
                         ListBoxDialog listBox = new ListBoxDialog(tb);
                         listBox.Show();
+                    }
+                }
+            }
+        }
+
+        private void UnderlineButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            if(rows > 0 && columns > 0)
+            {
+                foreach(TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+                {
+                    if (tb.IsSelectionActive && tb.TextDecorations != TextDecorations.Underline)
+                    {
+                        tb.TextDecorations = TextDecorations.Underline;
+                    } else if(tb.IsSelectionActive)
+                    {
+                        tb.TextDecorations = null;
                     }
                 }
             }
