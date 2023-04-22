@@ -237,6 +237,7 @@ namespace LatexProject.GUI.MVVM.View
                     tb.Foreground = Brushes.Black;
                     tb.TextAlignment = TextAlignment.Left;
                     tb.FontSize= 12;
+                    tb.TextDecorations = null;
                 }
                 colorPairs.Clear();
             }
@@ -274,12 +275,6 @@ namespace LatexProject.GUI.MVVM.View
         { // KDN - Uses textbox input to create Latex code inside of textbox for easy copy/paste
           // SDM - Added extra functionality to allow for table headers to be used.
             StringBuilder latexCode = new StringBuilder();
-            // Checks if tableCaption checkbox is ticked and if so updates the bool value. - SDM
-            // if(chkbox_tableCaption.IsChecked == true)
-            // {
-            //     tableCaption = true;
-            // }
-            
             addTextColors(rows, columns);
             addCellColors(rows, columns);
             if (colorPairs.Count > 0)
@@ -360,34 +355,35 @@ namespace LatexProject.GUI.MVVM.View
                             string textColor = GetHexColor(textBox.Foreground);
                             string colorName = colorPairs.FirstOrDefault(x => x.Value == cellColor).Key;
                             string textColorName = colorPairs.FirstOrDefault(x => x.Value == textColor).Key;
-                            string fontSizeName = "\\";
+                            string fontSizeName = "";
+                            int endBraces = 0;
                             if(textBox.FontSize == 6)
                             {
-                                fontSizeName += "tiny";
+                                fontSizeName += "\\tiny";
                             } else if(textBox.FontSize == 7)
                             {
-                                fontSizeName += "scriptsize";
+                                fontSizeName += "\\scriptsize";
                             } else if(textBox.FontSize == 8)
                             {
-                                fontSizeName += "footnotesize";
+                                fontSizeName += "\\footnotesize";
                             } else if(textBox.FontSize == 10)
                             {
-                                fontSizeName += "small";
+                                fontSizeName += "\\small";
                             } else if(textBox.FontSize == 14)
                             {
-                                fontSizeName += "large";
+                                fontSizeName += "\\large";
                             } else if(textBox.FontSize == 16)
                             {
-                                fontSizeName += "Large";
+                                fontSizeName += "\\Large";
                             } else if(textBox.FontSize == 18)
                             {
-                                fontSizeName += "LARGE";
+                                fontSizeName += "\\LARGE";
                             } else if(textBox.FontSize == 20)
                             {
-                                fontSizeName += "huge";
+                                fontSizeName += "\\huge";
                             } else if(textBox.FontSize == 22)
                             {
-                                fontSizeName += "Huge";
+                                fontSizeName += "\\Huge";
                             }
                             if(textBox.TextAlignment == TextAlignment.Center)
                             {
@@ -403,39 +399,36 @@ namespace LatexProject.GUI.MVVM.View
                             }
                             if(textColor != null && textColor != "000000") 
                             {
-                                latexCode.Append("\\color{" + textColorName + "} " + fontSizeName + " " + textBox.Text + "} & ");
+                                latexCode.Append("\\color{" + textColorName + "} ");
                             }
-                            else {
-                                latexCode.Append(fontSizeName + " " + textBox.Text + "} & ");
+                            if(fontSizeName != "")
+                            {
+                                latexCode.Append(fontSizeName + " ");
                             }
-                        }
+                            if(textBox.TextDecorations == TextDecorations.Underline)
+                            {
+                                latexCode.Append("\\underline{");
+                                endBraces++;
+                            }
+                            if(textBox.FontWeight == FontWeights.Bold)
+                            {
+                                latexCode.Append("\\textbf{");
+                                endBraces++;
+                            }
+                            if(textBox.FontStyle == FontStyles.Italic)
+                            {
+                                latexCode.Append("\\textit{");
+                                endBraces++;
+                            }
+                            
+                            latexCode.Append(textBox.Text + "}");
+                            for(int braces = 0; braces < endBraces; braces++)
+                            {
+                                latexCode.Append("}");
+                            }
 
-                        if(textBox.TextDecorations == TextDecorations.Underline)
-                        {
-                            string oldString = latexCode.ToString();
-                            int index = oldString.IndexOf(textBox.Text);
-                            latexCode.Insert(index, "\\underline{");
-                            int endIndex = textBox.Text.Length + latexCode.ToString().IndexOf(textBox.Text);
-                            latexCode.Insert(endIndex, "}");
+                            latexCode.Append(" & ");
                         }
-
-                        if (textBox.FontWeight == FontWeights.Bold)
-                        {
-                            string oldString = latexCode.ToString();
-                            int index = oldString.IndexOf(textBox.Text);
-                            latexCode.Insert(index, "\\textbf{");
-                            int endIndex = textBox.Text.Length + latexCode.ToString().IndexOf(textBox.Text);
-                            latexCode.Insert(endIndex, "}");
-                        }
-
-                        if (textBox.FontStyle == FontStyles.Italic)
-                        {
-                            string oldString = latexCode.ToString();
-                            int index = oldString.IndexOf(textBox.Text);
-                            latexCode.Insert(index, "\\textit{");
-                            int endIndex = textBox.Text.Length + latexCode.ToString().IndexOf(textBox.Text);
-                            latexCode.Insert(endIndex, "}");
-                         }
                     }
                     latexCode.Length -= 3;
                     latexCode.AppendLine("\\\\ \\hline");
