@@ -1,8 +1,7 @@
-name: Build and Test
-
+name: Build and Test with SBOM
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build-and-test:
@@ -19,3 +18,32 @@ jobs:
         run: dotnet build --configuration Release
       - name: Test
         run: dotnet test --configuration Release --no-build
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.x'
+
+    - name: List packages
+      run: dotnet list package > ./Docs/packages.txt
+
+    - name: Create SBOM
+      run: |
+        echo "name,version,source_url,license" > ./Docs/sbom.csv
+        tail -n +3 packages.txt | while read line; do
+          name=$(echo $line | awk '{print $1}')
+          version=$(echo $line | awk '{print $2}')
+          source_url=""
+          echo "$name,$version,$source_url,UNLICENSED" >> ./Docs/sbom.csv
+        done
+
+    - name: Upload SBOM
+      uses: actions/upload-artifact@v2
+      with:
+        name: sbom
+        path: sbom.csv

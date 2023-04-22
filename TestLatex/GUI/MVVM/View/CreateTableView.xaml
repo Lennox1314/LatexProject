@@ -47,8 +47,8 @@
                 <Button x:Name="btnItalic" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Italisize">
                     <Image Source="/GUI/Images/italic.png" MouseLeftButtonDown="ItalisizeButton_Click"/>
                 </Button>
-                <Button x:Name="btnUnderline" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
-                    <Image Source="/GUI/Images/underline.png"/>
+                <Button x:Name="btnUnderline" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Underline">
+                    <Image Source="/GUI/Images/underline.png" MouseLeftButtonDown="UnderlineButton_Click"/>
                 </Button>
             </StackPanel>
 
@@ -56,7 +56,7 @@
                 <Button x:Name="btnFontSize" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,5,0,0" Width="25" ToolTip="Font Size..." MouseLeftButtonDown="FontSizeButton_Click">
                     <Image Source="/GUI/Images/font-size.png" MouseLeftButtonDown="FontSizeButton_Click"/>
                 </Button>
-                <Button x:Name="btnFontColor" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
+                <Button x:Name="btnFontColor" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Font Color">
                     <Image Source="/GUI/Images/text-color.png" MouseLeftButtonDown="TextColor_Click"/>
                 </Button>
                 <Button x:Name="btnSplitCell" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
