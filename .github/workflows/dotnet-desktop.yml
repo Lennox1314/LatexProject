@@ -18,33 +18,25 @@ jobs:
         run: dotnet build --configuration Release
       - name: Test
         run: dotnet test --configuration Release --no-build
-  packageList:
-    runs-on: windows-latest
-    steps:
+  Generate-SBOM:
+   runs-on: ubuntu-latest
+   steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: List packages
-      run: | 
-        dir Docs
+      
+    - name: Build project
+      run: |
         dotnet restore
-        dotnet list package >  Docs/packages.csv
+        dotnet build --configuration Release --no-restore
+        
     - name: Generate SBOM
-      run: |
-        dotnet list package > Docs/packages.txt
-        echo "Packages:"
-        cat Docs/packages.csv
-    - name: Create SBOM
-      run: |
-        echo "name,version,source_url,license" > Docs/sbom.csv
-        tail -n +3 packages.txt | while read line; do
-          name=$(echo $line | awk '{print $1}')
-          version=$(echo $line | awk '{print $2}')
-          source_url=""
-          echo "$name,$version,$source_url,UNLICENSED" >> Docs/sbom.csv
-        done
-
+      uses: CycloneDX/cyclonedx-dotnet@v2
+      with:
+        output: sbom.xml
+        include-dev: true
+        
     - name: Upload SBOM
       uses: actions/upload-artifact@v2
       with:
         name: sbom
-        path: Docs/sbom.csv
+        path: sbom.xml
