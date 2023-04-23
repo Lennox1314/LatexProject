@@ -20,7 +20,7 @@ jobs:
         run: dotnet test --configuration Release --no-build
   Generate-SBOM:
    runs-on: ubuntu-latest
-    steps:
+   steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
