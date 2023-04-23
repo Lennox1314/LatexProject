@@ -30,14 +30,14 @@ jobs:
         dotnet-version: '3.1.x'
 
     - name: List packages
-      run: dotnet list package > ./Docs/packages.txt
+      run: dotnet list package > /home/runner/work/LatexProject//Docs/packages.csv
     - name: Generate SBOM
       run: |
         pwd
-        dotnet list package --include-transitive --format=csv > packages.csv
+        dotnet list package --format=csv > /home/runner/work/LatexProject/Docs/packages.txt
         echo "Packages:"
-        cat packages.csv
-        spdx-sbom-generator -i packages.csv -o sbom.txt
+        cat /home/runner/work/LatexProject/Docs/packages.csv
+        spdx-sbom-generator -i /home/runner/work/LatexProject/Docs/packages.csv -o /home/runner/work/LatexProject/Docs/sbom.csv
         echo "SBOM:"
-        cat sbom.txt
+        cat /home/runner/work/LatexProject/LatexProject/Docs/sbom.txt
 
