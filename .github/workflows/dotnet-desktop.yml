@@ -37,6 +37,5 @@ jobs:
         run: |
           dotnet CycloneDX --out Docs --json LatexProject.sln 
           ls Docs
-        #mv bom.json sbom.json
-        #mv sbom.json Docs
+        #mv Docs/bom.json Docs/sbom.json
 
