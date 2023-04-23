@@ -31,8 +31,6 @@ jobs:
 
       - name: Install CycloneDX .NET CLI tool
         run: |
-          dotnet --list-runtimes
-          dotnet --list-sdks
           dotnet tool install --global CycloneDX
 
       - name: Generate SBOM
