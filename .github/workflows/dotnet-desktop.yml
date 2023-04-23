@@ -31,16 +31,16 @@ jobs:
 
       - name: Install CycloneDX .NET CLI tool
         run: |
-          dotnet nuget add source CycloneDX
-          dotnet tool install -g CycloneDX.Tool
+          dotnet tool install --global CycloneDX
 
       - name: Generate SBOM
         run: |
           dotnet cyclonedx sbom
           mv bom.xml sbom.xml
+          mv sbom.xml Docs
 
       - name: Upload SBOM
         uses: actions/upload-artifact@v2
         with:
           name: sbom
-          path: sbom.xml
+          path: Docs/sbom.xml
