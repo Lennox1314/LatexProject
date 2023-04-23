@@ -33,6 +33,7 @@ jobs:
       run: dotnet list package > ./Docs/packages.txt
     - name: Generate SBOM
       run: |
+        pwd
         dotnet list package --include-transitive --format=csv > packages.csv
         echo "Packages:"
         cat packages.csv
