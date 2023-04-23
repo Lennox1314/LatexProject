@@ -35,12 +35,5 @@ jobs:
 
       - name: Generate SBOM
         run: |
-          dotnet cyclonedx sbom
-          mv bom.xml sbom.xml
-          mv sbom.xml Docs
+          dotnet CycloneDX LatexProject.sln -o Docs/ --filename sbom --json
 
-      - name: Upload SBOM
-        uses: actions/upload-artifact@v2
-        with:
-          name: sbom
-          path: Docs/sbom.xml
