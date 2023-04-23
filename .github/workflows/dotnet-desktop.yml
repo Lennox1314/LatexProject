@@ -30,7 +30,9 @@ jobs:
           dotnet-version: '7.0' # Replace with desired .NET Core version
 
       - name: Install CycloneDX .NET CLI tool
-        run: dotnet tool install -g CycloneDX.Tool
+        run: |
+          dotnet nuget add source https://api.nuget.org/v3/index.json -n CycloneDX
+          dotnet tool install -g CycloneDX.Tool
 
       - name: Generate SBOM
         run: |
