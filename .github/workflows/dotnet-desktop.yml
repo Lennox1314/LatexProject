@@ -31,8 +31,7 @@ jobs:
     - name: Generate SBOM
       run: |
         pip install spdx-tools
-        python -c "
-          import spdx-tools
+        python -c "import spdx-tools
           print(spdx-tools.__version__)
         "
         dotnet list package --format=csv > Docs/packages.txt
