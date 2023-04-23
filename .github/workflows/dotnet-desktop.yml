@@ -36,5 +36,7 @@ jobs:
       - name: Generate SBOM
         run: |
           dotnet CycloneDX --out Docs --json LatexProject.sln 
+          ls
+          cat bom.json
           mv Docs/bom.json Docs/sbom.json
 
