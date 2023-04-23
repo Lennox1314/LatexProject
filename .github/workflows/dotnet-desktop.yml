@@ -33,6 +33,7 @@ jobs:
       run: | 
         pwd 
         ls
+        dotnet restore
         dotnet list package >  /home/runner/work/LatexProject/LatexProject/Docs/packages.csv
     - name: Generate SBOM
       run: |
