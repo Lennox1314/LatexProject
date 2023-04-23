@@ -31,10 +31,9 @@ jobs:
 
     - name: List packages
       run: | 
-        pwd 
-        ls
+        dir Docs
         dotnet restore
-        dotnet list package >  /home/runner/work/LatexProject/LatexProject/Docs/packages.csv
+        dotnet list package >  Docs/packages.csv
     - name: Generate SBOM
       run: |
         dotnet list package --format=csv > /home/runner/work/LatexProject/LatexProject/Docs/packages.txt
