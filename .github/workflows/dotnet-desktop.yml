@@ -31,19 +31,12 @@ jobs:
 
     - name: List packages
       run: dotnet list package > ./Docs/packages.txt
-
-    - name: Create SBOM
+    - name: Generate SBOM
       run: |
-        echo "name,version,source_url,license" > ./Docs/sbom.csv
-        tail -n +3 packages.txt | while read line; do
-          name=$(echo $line | awk '{print $1}')
-          version=$(echo $line | awk '{print $2}')
-          source_url=""
-          echo "$name,$version,$source_url,UNLICENSED" >> ./Docs/sbom.csv
-        done
+        dotnet list package --include-transitive --format=csv > packages.csv
+        echo "Packages:"
+        cat packages.csv
+        spdx-sbom-generator -i packages.csv -o sbom.txt
+        echo "SBOM:"
+        cat sbom.txt
 
-    - name: Upload SBOM
-      uses: actions/upload-artifact@v2
-      with:
-        name: sbom
-        path: sbom.csv
