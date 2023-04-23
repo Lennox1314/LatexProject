@@ -34,6 +34,8 @@ jobs:
         dotnet list package >  Docs/packages.csv
     - name: Generate SBOM
       run: |
+        pip install spdx
+        python -c "import spdx; print(spdx.__version__)"
         dotnet list package --format=csv > Docs/packages.txt
         echo "Packages:"
         cat Docs/packages.csv
