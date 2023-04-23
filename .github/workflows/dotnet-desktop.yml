@@ -33,13 +33,13 @@ jobs:
       run: | 
         pwd 
         ls
-        dotnet list package > /home/runner/work/LatexProject//Docs/packages.csv
+        dotnet list package >  /home/runner/work/LatexProject/LatexProject/Docs/packages.csv
     - name: Generate SBOM
       run: |
-        dotnet list package --format=csv > /home/runner/work/LatexProject/Docs/packages.txt
+        dotnet list package --format=csv > /home/runner/work/LatexProject/LatexProject/Docs/packages.txt
         echo "Packages:"
-        cat /home/runner/work/LatexProject/Docs/packages.csv
-        spdx-sbom-generator -i /home/runner/work/LatexProject/Docs/packages.csv -o /home/runner/work/LatexProject/Docs/sbom.csv
+        cat  /home/runner/work/LatexProject/LatexProject/Docs/packages.csv
+        spdx-sbom-generator -i /home/runner/work/LatexProject/LatexProject/Docs/packages.csv -o /home/runner/work/LatexProject/LatexProject/Docs/sbom.csv
         echo "SBOM:"
-        cat /home/runner/work/LatexProject/LatexProject/Docs/sbom.txt
+        cat /home/runner/work/LatexProject/LatexProject/LatexProject/Docs/sbom.txt
 
