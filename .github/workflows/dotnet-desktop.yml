@@ -35,7 +35,7 @@ jobs:
         dotnet list package --format=csv > Docs/packages.txt
         echo "Packages:"
         cat Docs/packages.csv
-        spdx-sbom-generator -i Docs/packages.csv -o Docs/sbom.csv
+        spdx-tools sbom generate . --format csv --output Docs/sbom.csv
         echo "SBOM:"
         cat Docs/sbom.txt
 
