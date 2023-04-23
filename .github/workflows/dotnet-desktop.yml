@@ -20,23 +20,25 @@ jobs:
         run: dotnet test --configuration Release --no-build
   Generate-SBOM:
    runs-on: ubuntu-latest
-   steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      
-    - name: Build project
-      run: |
-        dotnet restore
-        dotnet build --configuration Release --no-restore
-        
-    - name: Generate SBOM
-      uses: CycloneDX/cyclonedx-dotnet@v2
-      with:
-        output: sbom.xml
-        include-dev: true
-        
-    - name: Upload SBOM
-      uses: actions/upload-artifact@v2
-      with:
-        name: sbom
-        path: sbom.xml
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x' # Replace with desired .NET Core version
+
+      - name: Install CycloneDX .NET CLI tool
+        run: dotnet tool install -g CycloneDX.Tool
+
+      - name: Generate SBOM
+        run: |
+          dotnet cyclonedx sbom
+          mv bom.xml sbom.xml
+
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v2
+        with:
+          name: sbom
+          path: sbom.xml
