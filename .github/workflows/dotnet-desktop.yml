@@ -30,26 +30,21 @@ jobs:
         dotnet list package >  Docs/packages.csv
     - name: Generate SBOM
       run: |
-        dotnet list package --format=csv > Docs/packages.txt
+        dotnet list package > Docs/packages.txt
         echo "Packages:"
         cat Docs/packages.csv
-  generate-sbom:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install Python and Pip
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3 python3-pip
-      - name: Install spdx-tools
-        run: |
-          pip3 install spdx-tools
-      - name: Generate SBOM
-        run: |
-          spdx init
-          spdx create spdx-doc output.spdx
-          spdx create package mypackage
-          spdx add file mypackage /path/to/file
-          spdx list > sbom.txt
-      - name: Print SBOM
-        run: cat sbom.txt
+    - name: Create SBOM
+      run: |
+        echo "name,version,source_url,license" > Docs/sbom.csv
+        tail -n +3 packages.txt | while read line; do
+          name=$(echo $line | awk '{print $1}')
+          version=$(echo $line | awk '{print $2}')
+          source_url=""
+          echo "$name,$version,$source_url,UNLICENSED" >> Docs/sbom.csv
+        done
+
+    - name: Upload SBOM
+      uses: actions/upload-artifact@v2
+      with:
+        name: sbom
+        path: Docs/sbom.csv
