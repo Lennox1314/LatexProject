@@ -11,7 +11,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '7.0'        
+          dotnet-version: '7.0.5'        
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
@@ -27,7 +27,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '7.0' # Replace with desired .NET Core version
+          dotnet-version: '7.0.5' # Replace with desired .NET Core version
 
       - name: Install CycloneDX .NET CLI tool
         run: |
