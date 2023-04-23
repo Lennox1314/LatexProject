@@ -30,10 +30,12 @@ jobs:
         dotnet-version: '3.1.x'
 
     - name: List packages
-      run: dotnet list package > /home/runner/work/LatexProject//Docs/packages.csv
+      run: | 
+        pwd 
+        ls
+        dotnet list package > /home/runner/work/LatexProject//Docs/packages.csv
     - name: Generate SBOM
       run: |
-        pwd
         dotnet list package --format=csv > /home/runner/work/LatexProject/Docs/packages.txt
         echo "Packages:"
         cat /home/runner/work/LatexProject/Docs/packages.csv
