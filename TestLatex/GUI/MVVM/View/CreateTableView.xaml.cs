@@ -283,38 +283,44 @@ namespace LatexProject.GUI.MVVM.View
                 latexCode.Append("\\usepackage[table]{xcolor}\n");
                 try
                 {
-                    for (int i = 0; i < rows; i++)
+                    List<TextBox> textboxes = canGrid.Children.OfType<TextBox>().ToList();
+                    foreach (TextBox textBox in textboxes)
                     {
-                        for (int j = 0; j < columns; j++)
+
+                        if (textBox == null)
                         {
-                            TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
-
-                            if (textBox == null)
+                            latexCode.Append(" & "); // need to put exception for null here ---------
+                        }
+                        else
+                        {
+                            int col = 0;
+                            int row = 0;
+                            int index = textboxes.IndexOf(textBox);
+                            if (index > 0)
                             {
-                                latexCode.Append(" & "); // need to put exception for null here ---------
+                                col = index % columns;
+                                row = index / columns;
                             }
-                            else
+
+                            string cellColor = GetHexColor(textBox.Background);
+                            string textColor = GetHexColor(textBox.Foreground);
+                            string colorName = "color" + row + "_" + col;
+                            string textColorName = "textcolor" + row + "_" + col;
+                            if (!string.IsNullOrEmpty(cellColor))
                             {
-                                string cellColor = GetHexColor(textBox.Background);
-                                string textColor = GetHexColor(textBox.Foreground);
-                                string colorName = "color" + i + "_" + j;
-                                string textColorName = "textcolor" + i + "_" + j;
-                                if (!string.IsNullOrEmpty(cellColor))
+
+                                if (colorPairs.ContainsValue(cellColor) && cellColor != "FFFFFF")
                                 {
-
-                                    if (colorPairs.ContainsValue(cellColor) && cellColor != "FFFFFF")
-                                    {
-                                        latexCode.Append("\\definecolor{cellColor" + i + "_" + j + "}{HTML}{" + cellColor + "} \n");
-
-                                    }
-                                    if (colorPairs.ContainsValue(textColor) && textColor != "000000")
-                                    {
-                                        latexCode.Append("\\definecolor{textColor" + i + "_" + j + "}{HTML}{" + textColor + "} \n");
-
-                                    }
-
+                                    latexCode.Append("\\definecolor{cellColor" + row + "_" + col + "}{HTML}{" + cellColor + "} \n");
 
                                 }
+                                if (colorPairs.ContainsValue(textColor) && textColor != "000000")
+                                {
+                                    latexCode.Append("\\definecolor{textColor" + row + "_" + col + "}{HTML}{" + textColor + "} \n");
+
+                                }
+
+
                             }
                         }
                     }
@@ -339,99 +345,109 @@ namespace LatexProject.GUI.MVVM.View
             latexCode.AppendLine("\\hline");
 
             try {
-                for (int i = 0; i < rows; i++)
+                List<TextBox> textboxes = canGrid.Children.OfType<TextBox>().ToList();
+                foreach (TextBox textBox in textboxes)
                 {
-                    for (int j = 0; j < columns; j++)
+
+                    if (textBox == null)
                     {
-                        TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
-
-                        if (textBox == null)
-                        {
-                            latexCode.Append(" & "); // need to put exception for null here ---------
-                        }
-                        else
-                        {
-                            string cellColor = GetHexColor(textBox.Background);
-                            string textColor = GetHexColor(textBox.Foreground);
-                            string colorName = colorPairs.FirstOrDefault(x => x.Value == cellColor).Key;
-                            string textColorName = colorPairs.FirstOrDefault(x => x.Value == textColor).Key;
-                            string fontSizeName = "";
-                            int endBraces = 0;
-                            if(textBox.FontSize == 6)
-                            {
-                                fontSizeName += "\\tiny";
-                            } else if(textBox.FontSize == 7)
-                            {
-                                fontSizeName += "\\scriptsize";
-                            } else if(textBox.FontSize == 8)
-                            {
-                                fontSizeName += "\\footnotesize";
-                            } else if(textBox.FontSize == 10)
-                            {
-                                fontSizeName += "\\small";
-                            } else if(textBox.FontSize == 14)
-                            {
-                                fontSizeName += "\\large";
-                            } else if(textBox.FontSize == 16)
-                            {
-                                fontSizeName += "\\Large";
-                            } else if(textBox.FontSize == 18)
-                            {
-                                fontSizeName += "\\LARGE";
-                            } else if(textBox.FontSize == 20)
-                            {
-                                fontSizeName += "\\huge";
-                            } else if(textBox.FontSize == 22)
-                            {
-                                fontSizeName += "\\Huge";
-                            }
-                            if(textBox.TextAlignment == TextAlignment.Center)
-                            {
-                                latexCode.Append("\\multicolumn{1}{|c|}");
-                            } else if(textBox.TextAlignment == TextAlignment.Right)
-                            {
-                                latexCode.Append("\\multicolumn{1}{|r|}");
-                            }
-                            latexCode.Append("{");
-                            if (cellColor != null && cellColor != "FFFFFF")
-                            {
-                                latexCode.Append("\\cellcolor{" + colorName + "} ");
-                            }
-                            if(textColor != null && textColor != "000000") 
-                            {
-                                latexCode.Append("\\color{" + textColorName + "} ");
-                            }
-                            if(fontSizeName != "")
-                            {
-                                latexCode.Append(fontSizeName + " ");
-                            }
-                            if(textBox.TextDecorations == TextDecorations.Underline)
-                            {
-                                latexCode.Append("\\underline{");
-                                endBraces++;
-                            }
-                            if(textBox.FontWeight == FontWeights.Bold)
-                            {
-                                latexCode.Append("\\textbf{");
-                                endBraces++;
-                            }
-                            if(textBox.FontStyle == FontStyles.Italic)
-                            {
-                                latexCode.Append("\\textit{");
-                                endBraces++;
-                            }
-                            
-                            latexCode.Append(textBox.Text + "}");
-                            for(int braces = 0; braces < endBraces; braces++)
-                            {
-                                latexCode.Append("}");
-                            }
-
-                            latexCode.Append(" & ");
-                        }
+                        latexCode.Append(" & "); // need to put exception for null here ---------
                     }
-                    latexCode.Length -= 3;
-                    latexCode.AppendLine("\\\\ \\hline");
+                    else
+                    {
+                        string cellColor = GetHexColor(textBox.Background);
+                        string textColor = GetHexColor(textBox.Foreground);
+                        string colorName = colorPairs.FirstOrDefault(x => x.Value == cellColor).Key;
+                        string textColorName = colorPairs.FirstOrDefault(x => x.Value == textColor).Key;
+                        string fontSizeName = "";
+                        int endBraces = 0;
+                        if (textBox.FontSize == 6)
+                        {
+                            fontSizeName += "\\tiny";
+                        }
+                        else if (textBox.FontSize == 7)
+                        {
+                            fontSizeName += "\\scriptsize";
+                        }
+                        else if (textBox.FontSize == 8)
+                        {
+                            fontSizeName += "\\footnotesize";
+                        }
+                        else if (textBox.FontSize == 10)
+                        {
+                            fontSizeName += "\\small";
+                        }
+                        else if (textBox.FontSize == 14)
+                        {
+                            fontSizeName += "\\large";
+                        }
+                        else if (textBox.FontSize == 16)
+                        {
+                            fontSizeName += "\\Large";
+                        }
+                        else if (textBox.FontSize == 18)
+                        {
+                            fontSizeName += "\\LARGE";
+                        }
+                        else if (textBox.FontSize == 20)
+                        {
+                            fontSizeName += "\\huge";
+                        }
+                        else if (textBox.FontSize == 22)
+                        {
+                            fontSizeName += "\\Huge";
+                        }
+                        if (textBox.TextAlignment == TextAlignment.Center)
+                        {
+                            latexCode.Append("\\multicolumn{1}{|c|}");
+                        }
+                        else if (textBox.TextAlignment == TextAlignment.Right)
+                        {
+                            latexCode.Append("\\multicolumn{1}{|r|}");
+                        }
+                        latexCode.Append("{");
+                        if (cellColor != null && cellColor != "FFFFFF")
+                        {
+                            latexCode.Append("\\cellcolor{" + colorName + "} ");
+                        }
+                        if (textColor != null && textColor != "000000")
+                        {
+                            latexCode.Append("\\color{" + textColorName + "} ");
+                        }
+                        if (fontSizeName != "")
+                        {
+                            latexCode.Append(fontSizeName + " ");
+                        }
+                        if (textBox.TextDecorations == TextDecorations.Underline)
+                        {
+                            latexCode.Append("\\underline{");
+                            endBraces++;
+                        }
+                        if (textBox.FontWeight == FontWeights.Bold)
+                        {
+                            latexCode.Append("\\textbf{");
+                            endBraces++;
+                        }
+                        if (textBox.FontStyle == FontStyles.Italic)
+                        {
+                            latexCode.Append("\\textit{");
+                            endBraces++;
+                        }
+
+                        latexCode.Append(textBox.Text + "}");
+                        for (int braces = 0; braces < endBraces; braces++)
+                        {
+                            latexCode.Append("}");
+                        }
+
+                        latexCode.Append(" & ");
+                    }
+                    int index = textboxes.IndexOf(textBox);
+                    if ((index + 1) % columns == 0)
+                    {
+                        latexCode.Length -= 3;
+                        latexCode.AppendLine("\\\\ \\hline");
+                    }
                 }
             }
             catch (NullReferenceException except)
@@ -583,34 +599,47 @@ namespace LatexProject.GUI.MVVM.View
 
         public void addTextColors(int rows, int columns)
         {
-            for (int i = 0; i < rows; i++)
+            List<TextBox> textboxes = canGrid.Children.OfType<TextBox>().ToList();
+            foreach (TextBox textBox in textboxes)
             {
-                for (int j = 0; j < columns; j++)
+                int col = 0;
+                int row = 0;
+                int index = textboxes.IndexOf(textBox);
+                if (index > 0)
                 {
-                    TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
-                    string textColor = GetHexColor(textBox.Foreground);
-                    string textColorName = "textColor" + i + "_" + j;
-                    if (!colorPairs.ContainsKey(textColor) && !colorPairs.ContainsKey(textColorName) && textColor != "000000")
-                    {
-                        colorPairs.Add(textColorName, textColor);
-                    }
+                    col = index % columns;
+                    row = index / columns;
                 }
+
+                string textColor = GetHexColor(textBox.Foreground);
+                string textColorName = "textColor" + row + "_" + col;
+                if (!colorPairs.ContainsKey(textColor) && !colorPairs.ContainsKey(textColorName) && textColor != "000000")
+                {
+                    colorPairs.Add(textColorName, textColor);
+                }
+
             }
         }
         public void addCellColors(int rows, int columns)
         {
-            for (int i = 0; i < rows; i++)
+            List<TextBox> textboxes = canGrid.Children.OfType<TextBox>().ToList();
+            foreach (TextBox textBox in textboxes)
             {
-                for (int j = 0; j < columns; j++)
+                int col = 0;
+                int row = 0;
+                int index = textboxes.IndexOf(textBox);
+                if(index > 0)
                 {
-                    TextBox textBox = (TextBox)canGrid.FindName("TextBox_" + i + "_" + j);
-                    string cellColor = GetHexColor(textBox.Background);
-                    string cellColorName = "cellColor" + i + "_" + j;
-                    if (!colorPairs.ContainsKey(cellColor) && !colorPairs.ContainsKey(cellColorName) && cellColor != "FFFFFF")
-                    {
-                        colorPairs.Add(cellColorName, cellColor);
-                    }
+                    col = index % columns;
+                    row = index / columns;
                 }
+                string cellColor = GetHexColor(textBox.Background);
+                string cellColorName = "cellColor" + row + "_" + col;
+                if (!colorPairs.ContainsKey(cellColor) && !colorPairs.ContainsKey(cellColorName) && cellColor != "FFFFFF")
+                {
+                    colorPairs.Add(cellColorName, cellColor);
+                }
+
             }
         }
 
