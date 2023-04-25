@@ -92,9 +92,7 @@
                 <Button x:Name="btnAlignRight" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Right Align Text" MouseLeftButtonDown="RightAlignButton_Click">
                     <Image Source="/GUI/Images/align-right.png" MouseLeftButtonDown="RightAlignButton_Click"/>
                 </Button>
-                <Button x:Name="btnAlignVert" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
-                    <Image Source="/GUI/Images/verticalAlign.png"/>
-                </Button>
+               
             </StackPanel>
 
             <StackPanel Orientation="Vertical">
