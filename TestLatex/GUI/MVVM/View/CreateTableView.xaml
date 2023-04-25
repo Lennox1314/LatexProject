@@ -59,11 +59,11 @@
                 <Button x:Name="btnFontColor" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Font Color">
                     <Image Source="/GUI/Images/text-color.png" MouseLeftButtonDown="TextColor_Click"/>
                 </Button>
-                <Button x:Name="btnSplitCell" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
-                    <Image Source="/GUI/Images/split-cells.png"/>
+                <Button x:Name="btnSplitCell" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Split Cell">
+                    <Image Source="/GUI/Images/split-cells.png" MouseLeftButtonDown="SplitCellButton_Click"/>
                 </Button>
-                <Button x:Name="btnMergeCell" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
-                    <Image Source="/GUI/Images/merge-cells.png"/>
+                <Button x:Name="btnMergeCell" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Merge Cell">
+                    <Image Source="/GUI/Images/merge-cells.png" MouseLeftButtonDown="MergeCellButton_Click"/>
                 </Button>
             </StackPanel>
 

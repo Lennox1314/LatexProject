@@ -1,0 +1,22 @@
+﻿<Window x:Class="LatexProject.GUI.MVVM.Model.MergeCellDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LatexProject.GUI.MVVM.Model"
+        mc:Ignorable="d"
+        Title="MergeCellDialog" Height="150" Width="400">
+    <DockPanel VerticalAlignment="Center">
+        <StackPanel DockPanel.Dock="Bottom">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="0, 0, 0, 5"/>
+                </Style>
+            </StackPanel.Resources>
+            <TextBlock TextAlignment="Center">Which direction would you like to merge?</TextBlock>
+            <Button Name="btnMergeRight" Click="btnMergeRight_Click">Merge Right...</Button>
+            <Button Name="btnMergeDown" Click="btnMergeDown_Click">Merge Down...</Button>
+            <Button Name="btnCancel" Click="btnCancel_Click">Cancel</Button>
+        </StackPanel>
+    </DockPanel>
+</Window>

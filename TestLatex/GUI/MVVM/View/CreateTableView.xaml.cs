@@ -41,7 +41,11 @@ namespace LatexProject.GUI.MVVM.View
         public bool paintCell = false;
         public bool changeTextColor = false;
         Dictionary<string, string> colorPairs = new Dictionary<string, string>();
-        
+        double textBoxWidth = 40;
+        double textBoxHeight = 20;
+        int horCells = 0;
+        int vertCells = 0;
+
         private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
         {
             if(stkMenuDisplay.Visibility == Visibility.Collapsed)
@@ -238,6 +242,9 @@ namespace LatexProject.GUI.MVVM.View
                     tb.TextAlignment = TextAlignment.Left;
                     tb.FontSize= 12;
                     tb.TextDecorations = null;
+                    tb.Visibility = Visibility.Visible;
+                    tb.Width = textBoxWidth;
+                    tb.Height = textBoxHeight;
                 }
                 colorPairs.Clear();
             }
@@ -352,6 +359,9 @@ namespace LatexProject.GUI.MVVM.View
                     if (textBox == null)
                     {
                         latexCode.Append(" & "); // need to put exception for null here ---------
+                    } else if(textBox.Visibility == Visibility.Hidden)
+                    {
+
                     }
                     else
                     {
@@ -361,6 +371,7 @@ namespace LatexProject.GUI.MVVM.View
                         string textColorName = colorPairs.FirstOrDefault(x => x.Value == textColor).Key;
                         string fontSizeName = "";
                         int endBraces = 0;
+                        int numOfColsWide = (int)(textBox.Width / textBoxWidth);
                         if (textBox.FontSize == 6)
                         {
                             fontSizeName += "\\tiny";
@@ -397,13 +408,19 @@ namespace LatexProject.GUI.MVVM.View
                         {
                             fontSizeName += "\\Huge";
                         }
+                        if (textBox.TextAlignment == TextAlignment.Center || textBox.TextAlignment == TextAlignment.Right || textBox.Width > textBoxWidth)
+                        {
+                            latexCode.Append("\\multicolumn{" + numOfColsWide + "}{|l|}");
+                        }
                         if (textBox.TextAlignment == TextAlignment.Center)
                         {
-                            latexCode.Append("\\multicolumn{1}{|c|}");
+                            latexCode.Length -= 5;
+                            latexCode.Append("{|c|}");
                         }
                         else if (textBox.TextAlignment == TextAlignment.Right)
                         {
-                            latexCode.Append("\\multicolumn{1}{|r|}");
+                            latexCode.Length -= 5;
+                            latexCode.Append("{|r|}");
                         }
                         latexCode.Append("{");
                         if (cellColor != null && cellColor != "FFFFFF")
@@ -597,6 +614,104 @@ namespace LatexProject.GUI.MVVM.View
             }
         }
 
+        private void MergeCellButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            if(rows > 0 && columns > 0)
+            {
+                List<TextBox> textboxes = canGrid.Children.OfType<TextBox>().ToList();
+                foreach(TextBox tb in textboxes)
+                {
+                    if(tb.IsSelectionActive)
+                    {
+                        int numOfHorCells = (int)(tb.Width / textBoxWidth);
+                        int numOfVertCells = (int)(tb.Height / textBoxHeight);
+                        int col = 0;
+                        int row = 0;
+                        int index = textboxes.IndexOf(tb);
+                        
+                        if(index > 0)
+                        {
+                            col = (index) % columns;
+                            row = (index) / columns;
+                        }
+
+                        bool mRight;
+                        bool mDown;
+                        MergeCellDialog dial = new MergeCellDialog(row + (numOfVertCells - 1), col + (numOfHorCells - 1), rows, columns);
+                        dial.ShowDialog();
+                        mRight = dial.doMergeRight();
+                        mDown = dial.doMergeDown();
+
+                        if(mRight)
+                        {
+                            int cellToMergeWidth = 0;
+                            for (int i = 1; i <= numOfVertCells; i++)
+                            {
+                                TextBox cellToMerge = textboxes[(index + numOfHorCells) + (i - 1) * columns];
+
+                                cellToMerge.Visibility = Visibility.Hidden;
+                                cellToMerge.Clear();
+                                cellToMergeWidth = (int)cellToMerge.Width;
+                            }
+                            tb.Width += cellToMergeWidth;
+
+                        } else if(mDown)
+                        {
+                            int cellToMergeHeight = 0;
+                            for (int i = 1; i <= numOfHorCells; i++)
+                            {
+                                TextBox cellToMerge = textboxes[(index + (columns * numOfVertCells) + (i - 1))];
+
+                                cellToMerge.Visibility = Visibility.Hidden;
+                                cellToMerge.Clear();
+                                cellToMergeHeight = (int)cellToMerge.Height;
+                            }
+                            tb.Height += cellToMergeHeight;
+                        }
+
+                    }
+                }
+            }
+        }
+
+        private void SplitCellButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            if(rows > 0 && columns > 0)
+            {
+                List<TextBox> textboxes = canGrid.Children.OfType<TextBox>().ToList();
+                foreach(TextBox tb in textboxes)
+                {
+                    if(tb.IsSelectionActive)
+                    {
+                        if(tb.Width == textBoxWidth && tb.Height == textBoxHeight)
+                        {
+                            MessageBox.Show("Cannot split the cell as it's only a single cell.");
+                        } else
+                        {
+                            int numHorSplit = (int)(tb.Width / textBoxWidth);
+                            int numVertSplit = (int)(tb.Height / textBoxHeight);
+
+                            int col = 0;
+                            int row = 0;
+                            int index = textboxes.IndexOf(tb);
+                            if(index > 0)
+                            {
+                                col = index % columns;
+                                row = index / columns;
+                            }
+
+                            tb.Width = textBoxWidth;
+                            tb.Height = textBoxHeight;
+                        }
+                    }
+                    if(tb.Visibility == Visibility.Hidden)
+                    {
+                        tb.Visibility = Visibility.Visible;
+                    }
+                }
+            }
+        }
+
         public void addTextColors(int rows, int columns)
         {
             List<TextBox> textboxes = canGrid.Children.OfType<TextBox>().ToList();
@@ -647,10 +762,6 @@ namespace LatexProject.GUI.MVVM.View
         {
             // KDN - creates a grid of textboxes that after a certain size will become scrollable 
 
-            // set the dimensions of each cell
-            double textBoxWidth = 40;
-            double textBoxHeight = 20;
-
             // create a canvas to hold the grid
             canGrid = new Canvas();
             canGrid.Width = textBoxWidth * columns;
@@ -678,6 +789,7 @@ namespace LatexProject.GUI.MVVM.View
                     textBox.Name = textBoxName;
                     textBox.PreviewMouseLeftButtonUp += PaintTextbox_Click;
                     textBox.TextChanged += ChangeTextColor_Click;
+                    textBox.TextWrapping = TextWrapping.Wrap;
                     canGrid.Children.Add(textBox);
                     Canvas.SetLeft(textBox, j * textBoxWidth);
                     Canvas.SetTop(textBox, i * textBoxHeight);
