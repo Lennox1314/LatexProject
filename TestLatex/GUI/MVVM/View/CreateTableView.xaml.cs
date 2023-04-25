@@ -45,6 +45,7 @@ namespace LatexProject.GUI.MVVM.View
         double textBoxHeight = 20;
         int horCells = 0;
         int vertCells = 0;
+        int borderThickness = 1;
 
         private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -247,6 +248,7 @@ namespace LatexProject.GUI.MVVM.View
                     tb.Height = textBoxHeight;
                 }
                 colorPairs.Clear();
+                borderThickness = 1;
             }
         }
 
@@ -262,6 +264,7 @@ namespace LatexProject.GUI.MVVM.View
             LaTeXCodeTextBox.Text = "";
             rows = 0;
             columns = 0;
+            borderThickness = 1;
             tableCaption = "";
         }
 
@@ -338,6 +341,8 @@ namespace LatexProject.GUI.MVVM.View
                 }
                 latexCode.Append("%***\tEND\t***\n\n");
             }
+            latexCode.Append("\\setlength{\\arrayrulewidth}{" + borderThickness + "pt}\n");
+
             latexCode.AppendLine("\\begin{table}[h]");
 
             // Starts the table centered. - SDM
@@ -708,6 +713,20 @@ namespace LatexProject.GUI.MVVM.View
                     {
                         tb.Visibility = Visibility.Visible;
                     }
+                }
+            }
+        }
+
+        private void BordersButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            if(rows > 0 && columns > 0)
+            {
+                BorderDialog dialog= new BorderDialog();
+                dialog.ShowDialog();
+                borderThickness = dialog.getBorderThickness();
+                foreach(TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
+                {
+                    tb.BorderThickness = new Thickness(borderThickness);
                 }
             }
         }

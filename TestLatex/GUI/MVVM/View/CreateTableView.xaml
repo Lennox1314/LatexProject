@@ -68,22 +68,10 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnRemoveBorders" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,5,0,0" Width="25">
-                    <Image Source="/GUI/Images/remove-borders.png"/>
+                <Button x:Name="btnAddBorder" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,5,0,0" Width="25" ToolTip="Borders...">
+                    <Image Source="/GUI/Images/border.png" MouseLeftButtonDown="BordersButton_Click"/>
                 </Button>
-                <Button x:Name="btnAddBorder" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25">
-                    <Image Source="/GUI/Images/border.png"/>
-                </Button>
-                <Button x:Name="btnClearFormatting" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Clear Table Formatting">
-                    <Image Source="/GUI/Images/clear-formatting.png" MouseLeftButtonDown="TableFormatClearButton_Click"/>
-                </Button>
-                <Button x:Name="btnClearTable" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Clear grid and table contents.">
-                    <Image Source="/GUI/Images/clear_table.png" MouseLeftButtonDown="ClearTableButton_Click"/>
-                </Button>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnAlignLeft" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,5,0,0" Width="25" ToolTip="Left Align Text" MouseLeftButtonDown="LeftAlignButton_Click">
+                <Button x:Name="btnAlignLeft" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Left Align Text" MouseLeftButtonDown="LeftAlignButton_Click">
                     <Image Source="/GUI/Images/align-left.png" MouseLeftButtonDown="LeftAlignButton_Click"/>
                 </Button>
                 <Button x:Name="btnAlignCenter" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Center Align Text" MouseLeftButtonDown="CenterAlignTextButton_Click">
@@ -92,7 +80,16 @@
                 <Button x:Name="btnAlignRight" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Right Align Text" MouseLeftButtonDown="RightAlignButton_Click">
                     <Image Source="/GUI/Images/align-right.png" MouseLeftButtonDown="RightAlignButton_Click"/>
                 </Button>
-               
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="btnClearFormatting" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="85,5,0,0" Width="25" ToolTip="Clear Table Formatting">
+                    <Image Source="/GUI/Images/clear-formatting.png" MouseLeftButtonDown="TableFormatClearButton_Click"/>
+                </Button>
+                <Button x:Name="btnClearTable" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,5,0,0" Width="25" ToolTip="Clear grid and table contents.">
+                    <Image Source="/GUI/Images/clear_table.png" MouseLeftButtonDown="ClearTableButton_Click"/>
+                </Button>
+
             </StackPanel>
 
             <StackPanel Orientation="Vertical">
