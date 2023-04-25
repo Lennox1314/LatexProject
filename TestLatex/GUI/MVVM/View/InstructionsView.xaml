@@ -7,9 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <TextBlock TextWrapping="Wrap" Foreground="White" FontSize="20" Margin="20,100,20,0" >
-            Here is where we can add some instructions for stuff or maybe we just add minimal
-            here and have a link to the wiki for the big instructions?
+        <TextBlock TextWrapping="Wrap" Foreground="White" FontSize="20" Margin="20,0,20,0" >
+            Instructions: This program can be used to help create complex tables for use in Latex.
+            Start with selecting the row and column buttons and specifing the desired table size.
+            From there any amount of data can be entered into each cell.
+            For any custom color changes to either the cell or text make sure to copy the comment out and paste it before the document along with all of the custom colors made.
+            All other Latex code can be pasted directly into your Latex project in between the "\begin{document}" and "\end{document}" lines and will display the table you created.
         </TextBlock>
     </StackPanel>
 </UserControl>

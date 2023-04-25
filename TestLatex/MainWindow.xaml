@@ -34,7 +34,7 @@
                 <RadioButton Content="Home" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" IsChecked="True" Command="{Binding HomeViewCommand}"/>
                 <RadioButton Content="Instructions" Height="50" Foreground="white" FontSize="14" Style="{StaticResource MenuButtonTheme}" Command="{Binding InstructionsViewCommand}"/>
                 <RadioButton Content="Create Table" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" Command="{Binding CreateTableViewCommand}"/>
-                <RadioButton Content="Equation Creation" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" Command="{Binding EquationCreationViewCommand}"/>
+               <!-- <RadioButton Content="Equation Creation" Height="50" Foreground="White" FontSize="14" Style="{StaticResource MenuButtonTheme}" Command="{Binding EquationCreationViewCommand}"/> -->
             </StackPanel>
             <TextBox Width="250" Height="40" VerticalAlignment="Bottom" HorizontalAlignment="left" Grid.Column="1" Margin="10,0,0,20" Style="{StaticResource ModernTextBox}"/>
 

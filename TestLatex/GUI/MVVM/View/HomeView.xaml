@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <TextBlock Text="Welcome to Latex Helper (name in progress)" Foreground="White" FontSize="24" HorizontalAlignment="center"/>
+        <TextBlock Text="Welcome to Latex Helper" Foreground="White" FontSize="30" HorizontalAlignment="center"/>
+        <TextBlock Text="Please select what you would like to make from the left hand side" Foreground="White" FontSize="20" HorizontalAlignment="center" Margin="0,40,0,0"/>
     </StackPanel>
 </UserControl>
