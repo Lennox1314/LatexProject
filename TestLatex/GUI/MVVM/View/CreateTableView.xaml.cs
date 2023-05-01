@@ -30,6 +30,8 @@ namespace LatexProject.GUI.MVVM.View
         {
             InitializeComponent();
         }
+
+        // Instance variables
         public int left, right, top, bottom = 0;
         private int rows;
         private int columns;
@@ -49,6 +51,7 @@ namespace LatexProject.GUI.MVVM.View
 
         private void btnOpenMenu_Click(object sender, RoutedEventArgs e)
         {
+            // This function determines whether or not the buttons should be displayed.
             if(stkMenuDisplay.Visibility == Visibility.Collapsed)
             {
                 stkMenuDisplay.Visibility = Visibility.Visible;
@@ -169,7 +172,7 @@ namespace LatexProject.GUI.MVVM.View
 
         private void ItalisizeButton_Click(object sender, MouseButtonEventArgs e)
         {
-            // SDM - Italisizes the selected text.
+            // SDM - Italicizes the selected text.
             if (rows > 0 && columns > 0)
             {
                 foreach (TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
@@ -287,6 +290,8 @@ namespace LatexProject.GUI.MVVM.View
             StringBuilder latexCode = new StringBuilder();
             addTextColors(rows, columns);
             addCellColors(rows, columns);
+
+            // Verifies whether the color package needs to be added and if so it adds it to the top of the output.
             if (colorPairs.Count > 0)
             {
                 latexCode.Append("%***\tADD THE FOLLOWING TO THE TOP OF YOUR DOCUMENT\t***\n");
@@ -316,6 +321,7 @@ namespace LatexProject.GUI.MVVM.View
                             string textColor = GetHexColor(textBox.Foreground);
                             string colorName = "color" + row + "_" + col;
                             string textColorName = "textcolor" + row + "_" + col;
+                            // If the cell is colored, it defines the color at the top of the latex code.
                             if (!string.IsNullOrEmpty(cellColor))
                             {
 
@@ -341,8 +347,10 @@ namespace LatexProject.GUI.MVVM.View
                 }
                 latexCode.Append("%***\tEND\t***\n\n");
             }
+            // Adds the border thickness to the latex output.
             latexCode.Append("\\setlength{\\arrayrulewidth}{" + borderThickness + "pt}\n");
 
+            // Starts the table in the latex output.
             latexCode.AppendLine("\\begin{table}[h]");
 
             // Starts the table centered. - SDM
@@ -377,6 +385,7 @@ namespace LatexProject.GUI.MVVM.View
                         string fontSizeName = "";
                         int endBraces = 0;
                         int numOfColsWide = (int)(textBox.Width / textBoxWidth);
+                        // If the font size is different than the default it adds the latex syntax to handle it.
                         if (textBox.FontSize == 6)
                         {
                             fontSizeName += "\\tiny";
@@ -413,10 +422,12 @@ namespace LatexProject.GUI.MVVM.View
                         {
                             fontSizeName += "\\Huge";
                         }
+                        // Adds the multicolumn line of code if needed.
                         if (textBox.TextAlignment == TextAlignment.Center || textBox.TextAlignment == TextAlignment.Right || textBox.Width > textBoxWidth)
                         {
                             latexCode.Append("\\multicolumn{" + numOfColsWide + "}{|l|}");
                         }
+                        // If the cell's text alignment is different than the default, it adds the latex code to handle that.
                         if (textBox.TextAlignment == TextAlignment.Center)
                         {
                             latexCode.Length -= 5;
@@ -440,6 +451,7 @@ namespace LatexProject.GUI.MVVM.View
                         {
                             latexCode.Append(fontSizeName + " ");
                         }
+                        // The next 3 if statements handle underlining, bolding, and italicising text.
                         if (textBox.TextDecorations == TextDecorations.Underline)
                         {
                             latexCode.Append("\\underline{");
@@ -589,6 +601,7 @@ namespace LatexProject.GUI.MVVM.View
 
         private void FontSizeButton_Click(object sender, MouseButtonEventArgs e)
         {
+            // SDM - Changes the font size of the textbox selected.
             if(rows > 0 && columns > 0)
             {
                 foreach(TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
@@ -604,6 +617,7 @@ namespace LatexProject.GUI.MVVM.View
 
         private void UnderlineButton_Click(object sender, MouseButtonEventArgs e)
         {
+            // SDM - Underlines the font of the textbox selected.
             if(rows > 0 && columns > 0)
             {
                 foreach(TextBox tb in canGrid.Children.OfType<TextBox>().ToList())
@@ -621,6 +635,7 @@ namespace LatexProject.GUI.MVVM.View
 
         private void MergeCellButton_Click(object sender, MouseButtonEventArgs e)
         {
+            // SDM - Handles the merging of textboxes.
             if(rows > 0 && columns > 0)
             {
                 List<TextBox> textboxes = canGrid.Children.OfType<TextBox>().ToList();
@@ -681,6 +696,7 @@ namespace LatexProject.GUI.MVVM.View
 
         private void SplitCellButton_Click(object sender, MouseButtonEventArgs e)
         {
+            // SDM - Handles the splitting of textboxes.
             if(rows > 0 && columns > 0)
             {
                 List<TextBox> textboxes = canGrid.Children.OfType<TextBox>().ToList();
@@ -719,6 +735,7 @@ namespace LatexProject.GUI.MVVM.View
 
         private void BordersButton_Click(object sender, MouseButtonEventArgs e)
         {
+            // SDM - Changes the borders of the table.
             if(rows > 0 && columns > 0)
             {
                 BorderDialog dialog= new BorderDialog();
